@@ -1,17 +1,17 @@
 /* -*- c++ -*- */
-/* 
+/*
  * Copyright 2013 <+YOU OR YOUR COMPANY+>.
- * 
+ *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this software; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street,
@@ -47,18 +47,18 @@ namespace gr {
 		/*
 		 * The private constructor
 		 */
-		sink_impl::sink_impl(size_t itemsize, const char *host, unsigned short port, int payload_size, bool eof) 
+		sink_impl::sink_impl(size_t itemsize, const char *host, unsigned short port, int payload_size, bool eof)
 			: gr::sync_block("sink", gr::io_signature::make(1, 1, itemsize), gr::io_signature::make(0, 0, 0)) {
 
 				d_itemsize = itemsize;
-				d_payload_size = payload_size; 
+				d_payload_size = payload_size;
 				d_eof= eof;
 				d_socket= -1;
 				d_connected = false;
 
 				// create socket
 				d_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-				if(d_socket == -1) 
+				if(d_socket == -1)
 					perror("hiqsdr: socket open");
 
 				// Don't wait when shutting down

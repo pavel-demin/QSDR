@@ -1,19 +1,19 @@
 /* -*- c++ -*- */
 /*
  * Copyright 2004 Free Software Foundation, Inc.
- * 
+ *
  * This file is part of GNU Radio
- * 
+ *
  * GNU Radio is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * GNU Radio is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with GNU Radio; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
@@ -30,7 +30,7 @@
 #endif
 
 #ifdef DEBUG
-#define DBG(x) x 
+#define DBG(x) x
 #else
 #define DBG(x)
 #endif
@@ -102,14 +102,14 @@ int gr_rds_bpsk_demod::general_work (int noutput_items,
 	int sig;
 	int sign_sig,sign_sig_last;
 
-	if(d_sign_last == 0) 
+	if(d_sign_last == 0)
 		d_sign_last = (clk[0] >0?1:-1);
 
 	for(i=0; (i<n_in) && (i<n_clk_in); i++) {
 		//			printf("%f %f\n",in[i],clk[i]);
 		sign_current = (clk[i] > 0 ? 1:-1);
 
-		// 
+		//
 		sign_sig = (in[i]>0 ? 1:-1);
 		if (sign_sig == sign_sig_last)
 			sig++;
@@ -125,7 +125,7 @@ int gr_rds_bpsk_demod::general_work (int noutput_items,
 		}
 		sign_sig_last = sign_sig;
 
-		if(sign_current != d_sign_last) 
+		if(sign_current != d_sign_last)
 			d_zc++; // a zero cross in clk
 		d_sign_last = sign_current;
 
@@ -140,5 +140,5 @@ int gr_rds_bpsk_demod::general_work (int noutput_items,
 		}
 	}
 	consume_each (i);
-	return nout; 
+	return nout;
 }

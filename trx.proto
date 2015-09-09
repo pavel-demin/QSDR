@@ -4,10 +4,10 @@ message TrxMessage {
 	optional bytes audio 			= 1;
 	optional uint32 vfo 			= 2;
 	optional bool vfoActiv 			= 3;
-	optional uint64 rxCenterFreq 	= 4; 
-	optional uint64 rxFreq 			= 5; 
-	optional uint32 agc 			= 6; 
-	optional uint32 antenne 		= 7; 
+	optional uint64 rxCenterFreq 	= 4;
+	optional uint64 rxFreq 			= 5;
+	optional uint32 agc 			= 6;
+	optional uint32 antenne 		= 7;
 	optional uint32 fftSize 		= 8;
 	optional uint32 filterLo 		= 9;
 	optional uint32 filterHi 		= 10;

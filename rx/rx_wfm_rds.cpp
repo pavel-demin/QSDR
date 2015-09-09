@@ -94,7 +94,7 @@ void Rx_wfmrds::setFilter(int filterLo, int filterHi, int filterCut) {
 	if (filterHi > sampleRate/2)
 		filterHi = sampleRate/2;
 
-	filter_wfm->set_taps(firdes->low_pass(1, sampleRate, filterHi, filterCut)); 
+	filter_wfm->set_taps(firdes->low_pass(1, sampleRate, filterHi, filterCut));
 }
 
 void Rx_wfmrds::setFilterNotch(int freq, int bw) {

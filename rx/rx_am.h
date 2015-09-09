@@ -10,7 +10,7 @@ class Rx_am;
 typedef boost::shared_ptr<Rx_am> Rx_am_sptr;
 Rx_am_sptr make_rx_am(int sampleRate);
 
-class Rx_am : public Rx 
+class Rx_am : public Rx
 {
 
 public:

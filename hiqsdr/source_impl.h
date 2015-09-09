@@ -1,17 +1,17 @@
 /* -*- c++ -*- */
-/* 
+/*
  * Copyright 2013 <+YOU OR YOUR COMPANY+>.
- * 
+ *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this software; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street,
@@ -61,8 +61,8 @@ namespace gr {
 			  // Nothing to declare in this block.
 
 		  public:
-			  source_impl(size_t itemsize, const char *host,unsigned short port, unsigned short c_port, unsigned short rx_fir_port, 
-					  unsigned short tx_fir_port, int payload_size,bool eof, bool wait, int rxfreq, int txfreq, int rate,bool ant, 
+			  source_impl(size_t itemsize, const char *host,unsigned short port, unsigned short c_port, unsigned short rx_fir_port,
+					  unsigned short tx_fir_port, int payload_size,bool eof, bool wait, int rxfreq, int txfreq, int rate,bool ant,
 					  int presel, int att, int txLevel, bool ptt, int txRate, int clockCorr,
 					  std::vector<gr_complex> rxFirTaps, std::vector<gr_complex> txFirTaps);
 			  ~source_impl();

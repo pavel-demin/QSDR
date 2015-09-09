@@ -5,7 +5,7 @@ index 4f0042b..fe41e43 100644
 @@ -95,6 +95,7 @@ audio_alsa_source::audio_alsa_source (int sampling_rate,
    int  	error;
    int	dir;
- 
+
 +  hwParamsSet = false;
    // open the device for capture
    error = snd_pcm_open(&d_pcm_handle, d_device_name.c_str (),
@@ -13,13 +13,13 @@ index 4f0042b..fe41e43 100644
 @@ -231,11 +232,15 @@ audio_alsa_source::check_topology (int ninputs, int noutputs)
      return false;
    }
- 
+
 -  // set the parameters into the driver...
 -  err = snd_pcm_hw_params(d_pcm_handle, d_hw_params);
 -  if (err < 0){
 -    output_error_msg ("snd_pcm_hw_params failed", err);
 -    return false;
-+  // SG 
++  // SG
 +  if (!hwParamsSet) {
 +      // set the parameters into the driver...
 +      err = snd_pcm_hw_params(d_pcm_handle, d_hw_params);
@@ -29,7 +29,7 @@ index 4f0042b..fe41e43 100644
 +      }
 +      hwParamsSet = true;
    }
- 
+
    d_buffer_size_bytes =
 diff --git a/gr-audio/lib/alsa/audio_alsa_source.h b/gr-audio/lib/alsa/audio_alsa_source.h
 index e38af38..7fdcdb5 100644
@@ -43,5 +43,5 @@ index e38af38..7fdcdb5 100644
 +private:
 +  bool hwParamsSet;
  };
- 
+
  #endif /* INCLUDED_AUDIO_ALSA_SOURCE_H */

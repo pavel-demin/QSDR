@@ -15,15 +15,15 @@ using namespace std;
 FFTGraph::FFTGraph(settings *s, int x, int y) {
 	int i;
 
-	xSize = x; 
+	xSize = x;
 	ySize = y;
 	sdrSettings = s;
 	displayMode = GRAPH_WATERFALL;
 	nFFT = x;
 	fftPixmap = new QPixmap(xSize, ySize);
 	fftPixmap->fill(Qt::black);
-	mi = -300/20; 
-	tmi = mi; 
+	mi = -300/20;
+	tmi = mi;
 	ma = 0;
 	tma = ma;
 
@@ -44,7 +44,7 @@ FFTGraph::~FFTGraph() {
 void FFTGraph::settingsChanged() {
 	double h,s,v;
 	average_time_max = sdrSettings->getIntVal    ("Display,Spectrum,averageTimeMax");
-	average_time = sdrSettings->getIntVal        ("Display,Spectrum,averageTime");	
+	average_time = sdrSettings->getIntVal        ("Display,Spectrum,averageTime");
 	colorSpecMax = QColor(sdrSettings->getVal    ("Display,Color,Spectrum,maximum"));
 	colorSpecAverage = QColor(sdrSettings->getVal("Display,Color,Spectrum,average"));
 	colorSpecBack = QColor(sdrSettings->getVal("Display,Color,Spectrum,background"));
@@ -103,7 +103,7 @@ QRectF FFTGraph::boundingRect() const {
 }
 
 void FFTGraph::setMin(int v) {	// dbm
-	tmi = v/20.0; 
+	tmi = v/20.0;
 	if (tmi>=tma) tma = tmi + 0.1;
 	base = -tmi;
 	scale = 256/(tma-tmi);
@@ -172,10 +172,10 @@ void FFTGraph::fftDataReady(QByteArray data) {
 			fftPixmap->fill(colorSpecBack);
 			// setPen kostet rechenzeit, daher jede Schleife einzeln
 			painter.setPen(colorSpecMax);
-			for(i=1; i < data.size(); i++) 
+			for(i=1; i < data.size(); i++)
 				painter.drawLine(i-1,-fftmax[i-1]*20*fft_scale,i,-fftmax[i]*20*fft_scale);
 			painter.setPen(colorSpecAverage);
-			for(i=1; i < data.size(); i++) 
+			for(i=1; i < data.size(); i++)
 				painter.drawLine(i-1,-fftav[i-1]*20*fft_scale,i,-fftav[i]*20*fft_scale);
 			painter.setPen(QColor(128,128,128));
 			painter.drawLine(0,-mi*20*fft_scale,xSize,-mi*20*fft_scale);

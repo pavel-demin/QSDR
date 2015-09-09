@@ -63,7 +63,7 @@ void TrxDev_testsignal::setAntenne(int) { }
 int TrxDev_testsignal::getRXLowFreq() { return 0; }
 int TrxDev_testsignal::getRXHighFreq() { return 100; }
 void TrxDev_testsignal::setPTT(int) { }
-void TrxDev_testsignal::setTXPower(int) { } 
+void TrxDev_testsignal::setTXPower(int) { }
 int TrxDev_testsignal::getTXLowFreq() { return 0; }
 int TrxDev_testsignal::getTXHighFreq() { return 0; }
 void TrxDev_testsignal::setTXFreq(qint64) { }

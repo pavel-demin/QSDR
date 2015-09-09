@@ -59,7 +59,7 @@ void Rx_am::setFreq(int f) {
 void Rx_am::setFilter(int filterLo, int filterHi, int filterCut) {
 	if (filterHi > IF_RATE/2)
 		filterHi = IF_RATE/2;
-	filter_f->set_taps(firdes->low_pass(1, IF_RATE, filterHi, filterCut)); 
+	filter_f->set_taps(firdes->low_pass(1, IF_RATE, filterHi, filterCut));
 }
 
 void Rx_am::setFilterNotch(int freq, int bw) {

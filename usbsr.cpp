@@ -31,7 +31,7 @@ int UsbSR::open() {
     char attempt=0, error=0;
     do {
 	attempt++;
-	error = usbOpenDevice(&handle, 
+	error = usbOpenDevice(&handle,
 		USBDEV_SHARED_VENDOR, (const char*)VENDOR_NAME, USBDEV_SHARED_PRODUCT,  (const char*)PRODUCT_NAME, usbSerialID);
 	if(error != 0){
 	    qDebug() << "Could not open USB device ";

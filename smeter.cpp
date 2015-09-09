@@ -8,7 +8,7 @@
 #include <math.h>
 
 SMeter::SMeter(int x, int y) {
-    xSize = 120; 
+    xSize = 120;
     ySize = 40;
 }
 

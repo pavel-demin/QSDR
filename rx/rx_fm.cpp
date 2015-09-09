@@ -11,7 +11,7 @@ Rx_fm::Rx_fm(int sRate) : Rx("FM-RX") {
 	firdes = new gr::filter::firdes();
 	filter_if = gr::filter::freq_xlating_fir_filter_ccf::make (sampleRate/IF_RATE, firdes->low_pass(1, sampleRate, IF_RATE/2, IF_RATE/4), 0, sampleRate);
 	smeter = gr::analog::probe_avg_mag_sqrd_c::make (0, 0.0001);
-	
+
 	filter_fm =  gr::filter::freq_xlating_fir_filter_ccf::make (1, firdes->low_pass(1, IF_RATE, IF_RATE/4, IF_RATE/8), 0, IF_RATE);
 	squelch = gr::analog::simple_squelch_cc::make (1, 0.001);
 	quadDemodFM = gr::analog::quadrature_demod_cf::make (IF_RATE / (2*M_PI*10e3));
@@ -42,7 +42,7 @@ void Rx_fm::setFreq(int f) {
 void Rx_fm::setFilter(int filterLo, int filterHi, int filterCut) {
 	if (filterHi > IF_RATE/2)
 		filterHi = IF_RATE/2;
-	filter_fm->set_taps(firdes->low_pass(1, IF_RATE, filterHi, filterCut)); 
+	filter_fm->set_taps(firdes->low_pass(1, IF_RATE, filterHi, filterCut));
 }
 
 void Rx_fm::setFilterNotch(int freq, int bw) {

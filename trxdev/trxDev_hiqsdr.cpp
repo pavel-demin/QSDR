@@ -14,10 +14,10 @@ TrxDev_hiqsdr::TrxDev_hiqsdr(int sRate, const char* hiqip ) : TrxDev("HIQSDR") {
 	dcFilter = true;
 	sampleRate = sRate;
 
-	hiqsdrSink = gr::hiqsdr::sink::make (sizeof(gr_complex), hiqip, HIQSDR_TX_PORT); 
-	hiqsdrSource = gr::hiqsdr::source::make(sizeof(gr_complex), hiqip, 
-			HIQSDR_RX_PORT, HIQSDR_CTL_PORT, HIQSDR_RX_FIR_PORT, HIQSDR_TX_FIR_PORT, 
-			1442, false, true); 
+	hiqsdrSink = gr::hiqsdr::sink::make (sizeof(gr_complex), hiqip, HIQSDR_TX_PORT);
+	hiqsdrSource = gr::hiqsdr::source::make(sizeof(gr_complex), hiqip,
+			HIQSDR_RX_PORT, HIQSDR_CTL_PORT, HIQSDR_RX_FIR_PORT, HIQSDR_TX_FIR_PORT,
+			1442, false, true);
 
 	std::vector<gr_complex> v_coef;
 //	for (int i=0;i<sizeof(coef)/sizeof(float);i++)
@@ -29,7 +29,7 @@ TrxDev_hiqsdr::TrxDev_hiqsdr(int sRate, const char* hiqip ) : TrxDev("HIQSDR") {
 	firdes = new gr::filter::firdes();
 	//hiqsdrSource->setFilter(firdes->complex_band_pass(1, IF_RATE*8, -3800, -200, 1800), FILTER_RX);
 	//hiqsdrSource->setFilter(firdes->complex_band_pass(1, 8000*8, -3000, -200, 120), FILTER_RX);
-	
+
 	v_coef.clear();
 	for (int i=0;i<sizeof(tx_coef)/sizeof(float);i++)
 		v_coef.push_back(tx_coef[i]);
@@ -38,7 +38,7 @@ TrxDev_hiqsdr::TrxDev_hiqsdr(int sRate, const char* hiqip ) : TrxDev("HIQSDR") {
 
 	adder = gr::blocks::add_cc::make(1);
 	hiqsdrSource->setSampleRate(sampleRate);
-	movingAverage = gr::blocks::moving_average_cc::make (1024, -1/1024.0); 
+	movingAverage = gr::blocks::moving_average_cc::make (1024, -1/1024.0);
 
 	connect (hiqsdrSource, 0, movingAverage, 0);
 	connect (hiqsdrSource, 0, adder, 0);

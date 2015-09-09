@@ -128,7 +128,7 @@ class Trx : public QObject  {
 		gr::blocks::add_ff::sptr adder_eq;
 		gr::filter::dc_blocker_ff::sptr dcBlocker;
 		gr::blocks::multiply_const_ff::sptr multiL,multiR,multiTX;
-		gr_limit_ff_sptr limiterL,limiterR,limiterTX; 
+		gr_limit_ff_sptr limiterL,limiterR,limiterTX;
 		gr::blocks::null_sink::sptr nullSink;
 		gr::msg_queue::sptr rdsMsgq,fftMsgq,rxMsgq,txMsgq;
 		gr::blocks::add_ff::sptr rxAdderL, rxAdderR;
@@ -154,12 +154,12 @@ class Trx : public QObject  {
 		int filterLo;
 		int fpgaVersion;
 		int preamp;
-		long int rxFreq; 
+		long int rxFreq;
 		int rxMode;
 		int sampleRate;
 		int txSampleRate;
 		int squelchVal;
-		qint64 txFreq; 
+		qint64 txFreq;
 		int txPower;
 		int gain;
 		int osmoFreqCorr;

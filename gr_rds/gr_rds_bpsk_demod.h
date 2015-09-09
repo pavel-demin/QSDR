@@ -1,19 +1,19 @@
 /* -*- c++ -*- */
 /*
  * Copyright 2004 Free Software Foundation, Inc.
- * 
+ *
  * This file is part of GNU Radio
- * 
+ *
  * GNU Radio is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * GNU Radio is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with GNU Radio; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
@@ -26,7 +26,7 @@
  *
  * 	Written by : Ronnie Gaensli
  * 	Created: 2005/05
- * 
+ *
  */
 
 
@@ -44,7 +44,7 @@ class gr_rds_bpsk_demod;
  * to gr_blocks (and many other data structures).  The shared_ptr gets
  * us transparent reference counting, which greatly simplifies storage
  * management issues.  This is especially helpful in our hybrid
- * 
+ *
  * * C++ / Python system.
  *
  * See http://www.boost.org/libs/smart_ptr/smart_ptr.htm

@@ -12,7 +12,7 @@ class TxSrc_null;
 typedef boost::shared_ptr<TxSrc_null> TxSrc_null_sptr;
 TxSrc_null_sptr make_txsrc_null();
 
-class TxSrc_null : public TxSrc 
+class TxSrc_null : public TxSrc
 {
 
 public:

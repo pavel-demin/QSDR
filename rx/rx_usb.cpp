@@ -68,13 +68,13 @@ void Rx_usb::setFreq(int f) {
 void Rx_usb::setFilter(int filterLo, int filterHi, int filterCut) {
 	if (filterHi > IF_RATE/2)
 		filterHi = IF_RATE/2;
-	filter_c->set_taps(firdes->complex_band_pass(1, IF_RATE, filterLo, filterHi, filterCut)); 
+	filter_c->set_taps(firdes->complex_band_pass(1, IF_RATE, filterLo, filterHi, filterCut));
 }
 
 void Rx_usb::setFilterNotch(int freq, int bw) {
-	if (freq<bw) 
+	if (freq<bw)
 		freq=bw;
-	firFilter_ccf->set_taps(firdes->band_reject(1, AUDIO_RATE, freq-bw/2, freq+bw/2, bw/2)); 
+	firFilter_ccf->set_taps(firdes->band_reject(1, AUDIO_RATE, freq-bw/2, freq+bw/2, bw/2));
 }
 
 void Rx_usb::setNotch(bool v) {

@@ -118,10 +118,10 @@ QString settings::getValInt(QAbstractItemModel *model, QModelIndex modelIndex, Q
 	int i;
 
 	for(i=0;i<model->rowCount(modelIndex);i++) {
-		if (path[0] == model->index(i,0,modelIndex).data().toString()) { 
+		if (path[0] == model->index(i,0,modelIndex).data().toString()) {
 			if (path.size() == 1)
 				return (model->index(i,1,modelIndex).data().toString().split(",")[1]);
-			else 
+			else
 				return getValInt(model, model->index(i,0, modelIndex), path.mid(1));
 		}
 	}
@@ -148,14 +148,14 @@ bool settings::setVal(QStringList path, QString val) {
 bool settings::setValInt(QAbstractItemModel *model, QModelIndex modelIndex, QStringList path, QString val) {
 	int i;
 	for(i=0;i<model->rowCount(modelIndex);i++) {
-		if (path[0] == model->index(i,0,modelIndex).data().toString()) { 
+		if (path[0] == model->index(i,0,modelIndex).data().toString()) {
 			if (path.size() == 1) {
 				QStringList list = (model->index(i,1,modelIndex).data().toString().split(","));
 				list[1] = val;
 				model->setData(model->index(i,1,modelIndex), QVariant(list.join(",")), Qt::EditRole);
 				return true;
 		}
-			else 
+			else
 				return setValInt(model, model->index(i,0, modelIndex), path.mid(1), val);
 		}
 	}

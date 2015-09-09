@@ -24,5 +24,5 @@ private:
 
 };
 
-#endif 
+#endif
 

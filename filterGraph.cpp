@@ -12,7 +12,7 @@
 #define MIN(a,b)  a>b ? b:a
 
 FilterGraph::FilterGraph(settings *s, int x, int y) {
-    xSize = x; 
+    xSize = x;
     ySize = y;
     fftSize = x;
 	sdrSettings = s;
@@ -30,7 +30,7 @@ FilterGraph::FilterGraph(settings *s, int x, int y) {
     filterPixmap = QPixmap(xSize/8, ySize/8);
     filterPixmap.fill(QColor(255, 255, 255, shadow));
 	settingsChanged();
-    
+
     this->setAcceptHoverEvents(true);
 }
 

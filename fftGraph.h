@@ -16,7 +16,7 @@ class FFTGraph: public QObject, public QGraphicsItem  {
 	~FFTGraph();
 	QRectF boundingRect() const;
     public slots:
-	void fftDataReady(QByteArray); 
+	void fftDataReady(QByteArray);
 	void setMin(int v);
 	void setMax(int v);
 	int getMin();

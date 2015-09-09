@@ -1,19 +1,19 @@
 /* -*- c++ -*- */
 /*
  * Copyright 2004 Free Software Foundation, Inc.
- * 
+ *
  * This file is part of GNU Radio
- * 
+ *
  * GNU Radio is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * GNU Radio is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with GNU Radio; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
@@ -107,7 +107,7 @@ void gr_rds_data_decoder::enter_sync(unsigned int sync_block_number){
  * type 1 = PS
  * type 2 = PTY
  * type 3 = flagstring: TP, TA, MuSp, MoSt, AH, CMP, stPTY
- * type 4 = RadioText 
+ * type 4 = RadioText
  * type 5 = ClockTime
  * type 6 = Alternative Frequencies */
 void gr_rds_data_decoder::send_message(long msgtype, std::string msgtext){
@@ -119,7 +119,7 @@ void gr_rds_data_decoder::send_message(long msgtype, std::string msgtext){
 }
 
 /* see Annex B, page 64 of the standard */
-unsigned int gr_rds_data_decoder::calc_syndrome(unsigned long message, 
+unsigned int gr_rds_data_decoder::calc_syndrome(unsigned long message,
 			unsigned char mlen){
 	unsigned long reg=0;
 	unsigned int i;
@@ -146,7 +146,7 @@ void gr_rds_data_decoder::decode_type0(unsigned int *group, bool version_code) {
 	unsigned int af_code_1=0, af_code_2=0, no_af=0;
 	double af_1=0, af_2=0;
 	char flagstring[8]="0000000";
-	
+
 	traffic_program=(group[1]>>10) & 0x01;				// "TP"
 	traffic_announcement=(group[1]>>4) & 0x01;			// "TA"
 	music_speech=(group[1]>>3) & 0x01;					// "MuSp"
@@ -204,8 +204,8 @@ void gr_rds_data_decoder::decode_type0(unsigned int *group, bool version_code) {
 	}
 
 /* let's print out what we've got so far */
-	std::cout << "==>" << program_service_name << "<== -" << (traffic_program?"TP":"  ") 
-		<< '-' << (traffic_announcement?"TA":"  ") << '-' << (music_speech?"Music":"Speech") 
+	std::cout << "==>" << program_service_name << "<== -" << (traffic_program?"TP":"  ")
+		<< '-' << (traffic_announcement?"TA":"  ") << '-' << (music_speech?"Music":"Speech")
 		<< '-' << (mono_stereo?"MONO":"STEREO") << " - AF:" << af_string << std::endl;
 
 /* sending the messages to the queue */
@@ -255,7 +255,7 @@ double gr_rds_data_decoder::decode_af(unsigned int af_code) {
 	return alt_frequency;						// in kHz
 }
 
-/* SLOW LABELLING: see page 23 in the standard 
+/* SLOW LABELLING: see page 23 in the standard
  * for paging see page 90, Annex M in the standard (NOT IMPLEMENTED)
  * for extended country codes see page 69, Annex D.2 in the standard
  * for language codes see page 84, Annex J in the standard
@@ -284,7 +284,7 @@ void gr_rds_data_decoder::decode_type1(unsigned int *group, bool version_code){
 				ecc=slow_labelling&0xff;
 				if(paging) printf("paging:%x ", paging);
 				if((ecc>223)&&(ecc<229))
-					std::cout << "extended country code:" << 
+					std::cout << "extended country code:" <<
 						pi_country_codes[country_code-1][ecc-224] << std::endl;
 				else printf("invalid extended country code:%i\n", ecc);
 				break;
@@ -338,7 +338,7 @@ void gr_rds_data_decoder::decode_type3a(unsigned int *group){
 	int group_type=group[1]&0x1;
 	int message=group[2];
 	int aid=group[3];
-	
+
 	printf("aid group: %i%c - ", application_group, group_type?'B':'A');
 	if((application_group==8)&&(group_type==false)){	// 8A
 		int variant_code=(message>>14)&0x3;
@@ -449,7 +449,7 @@ void gr_rds_data_decoder::decode_optional_content(int no_groups, unsigned long i
 	int content=0;
 	int content_length=0;
 	int ff_pointer;
-	
+
 	for (int i=no_groups;i==0;i--){
 		ff_pointer=12+16;
 		while(ff_pointer>0){
@@ -466,17 +466,17 @@ void gr_rds_data_decoder::decode_optional_content(int no_groups, unsigned long i
 
 /* EON: see pages 38 and 46 in the standard */
 void gr_rds_data_decoder::decode_type14(unsigned int *group, bool version_code){
-	
+
 	bool tp_on=(group[1]>>4)&0x01;
 	char variant_code=group[1]&0x0f;
 	unsigned int information=group[2];
 	unsigned int pi_on=group[3];
-	
+
 	char pty_on=0;
 	bool ta_on=0;
 	static char ps_on[9]={' ',' ',' ',' ',' ',' ',' ',' ','\0'};
 	double af_1=0, af_2=0;
-	
+
 	if (!version_code){
 		switch (variant_code){
 			case 0:			// PS(ON)
@@ -621,7 +621,7 @@ int gr_rds_data_decoder::work (int noutput_items,
 {
 	const bool *in = (const bool *) input_items[0];
 
-	DBG(printf("RDS data decoder at work: input_items = %d, /104 = %d\n", 
+	DBG(printf("RDS data decoder at work: input_items = %d, /104 = %d\n",
 					noutput_items, noutput_items/104);)
 	int i=0,j;
 	unsigned long bit_distance, block_distance;
@@ -643,7 +643,7 @@ int gr_rds_data_decoder::work (int noutput_items,
 						}
 						else {
 							bit_distance=bit_counter-lastseen_offset_counter;
-							if (offset_pos[lastseen_offset]>=offset_pos[j]) 
+							if (offset_pos[lastseen_offset]>=offset_pos[j])
 								block_distance=offset_pos[j]+4-offset_pos[lastseen_offset];
 							else
 								block_distance=offset_pos[j]-offset_pos[lastseen_offset];

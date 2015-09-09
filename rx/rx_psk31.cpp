@@ -73,7 +73,7 @@ void Rx_psk31::setFreq(int f) {
 void Rx_psk31::setFilter(int filterLo, int filterHi, int filterCut) {
 	if (filterHi > IF_RATE/2)
 		filterHi = IF_RATE/2;
-	filter_c->set_taps(firdes->complex_band_pass(1, IF_RATE, -filterHi, -filterLo, filterCut)); 
+	filter_c->set_taps(firdes->complex_band_pass(1, IF_RATE, -filterHi, -filterLo, filterCut));
 }
 
 void Rx_psk31::setFilterNotch(int freq, int bw) {

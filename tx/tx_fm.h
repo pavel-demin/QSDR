@@ -11,7 +11,7 @@ class Tx_fm;
 typedef boost::shared_ptr<Tx_fm> Tx_fm_sptr;
 Tx_fm_sptr make_tx_fm(int sampleRate, int fMax);
 
-class Tx_fm : public Tx 
+class Tx_fm : public Tx
 {
 
 public:
@@ -20,7 +20,7 @@ public:
 
 private:
 	int sampleRate;
-	gr::filter::fir_filter_ccc::sptr firFilter_ccc; 
+	gr::filter::fir_filter_ccc::sptr firFilter_ccc;
 	gr::filter::firdes *firdes;
 	gr::analog::frequency_modulator_fc::sptr fmMod;
 	gr::blocks::multiply_const_cc::sptr multi;

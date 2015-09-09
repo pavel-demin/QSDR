@@ -13,7 +13,7 @@ class AudioGraph: public QObject, public QGraphicsItem  {
 	~AudioGraph();
 	QRectF boundingRect() const;
     public slots:
-	void audioData(short); 
+	void audioData(short);
 	void setMin(int v);
 	void setMax(int v);
 	int getMin();

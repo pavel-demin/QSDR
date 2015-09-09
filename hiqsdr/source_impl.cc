@@ -1,17 +1,17 @@
 /* -*- c++ -*- */
-/* 
+/*
  * Copyright 2013 <+YOU OR YOUR COMPANY+>.
- * 
+ *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this software; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street,
@@ -39,21 +39,21 @@ namespace gr {
 	namespace hiqsdr {
 
 		source::sptr
-			source::make(size_t itemsize, const char *host, unsigned short port, unsigned short c_port, 
-					unsigned short rx_fir_port, unsigned short tx_fir_port, int payload_size,bool eof, 
-					bool wait, int rxfreq, int txfreq, int rate,bool ant, int presel, int att, int txLevel, 
+			source::make(size_t itemsize, const char *host, unsigned short port, unsigned short c_port,
+					unsigned short rx_fir_port, unsigned short tx_fir_port, int payload_size,bool eof,
+					bool wait, int rxfreq, int txfreq, int rate,bool ant, int presel, int att, int txLevel,
 					bool ptt, int txRate, int clockCorr, std::vector<gr_complex> rxFirTaps, std::vector<gr_complex> txFirTaps)
 			{
 				return gnuradio::get_initial_sptr
-					(new source_impl(itemsize, host, port, c_port, rx_fir_port, tx_fir_port, payload_size, eof, wait, 
+					(new source_impl(itemsize, host, port, c_port, rx_fir_port, tx_fir_port, payload_size, eof, wait,
 									 rxfreq, txfreq, rate, ant, presel, att, txLevel, ptt, txRate, clockCorr, rxFirTaps, txFirTaps));
 			}
 
 		/*
 		 * The private constructor
 		 */
-		source_impl::source_impl(size_t itemsize, const char *host,unsigned short port, unsigned short c_port, unsigned short rx_fir_port, 
-				unsigned short tx_fir_port, int payload_size,bool eof, bool wait, int rxfreq, int txfreq, int rate,bool ant, 
+		source_impl::source_impl(size_t itemsize, const char *host,unsigned short port, unsigned short c_port, unsigned short rx_fir_port,
+				unsigned short tx_fir_port, int payload_size,bool eof, bool wait, int rxfreq, int txfreq, int rate,bool ant,
 				int presel, int att, int txLevel, bool ptt, int txRate, int clockDiff, std::vector<gr_complex> rxFirTaps, std::vector<gr_complex> txFirTaps)
 			: gr::sync_block("udp source",
 					gr::io_signature::make(0, 0, 0),
@@ -67,20 +67,20 @@ namespace gr {
 
 			cwMode = false;
 			clockCorr = clockDiff;
-			firmVersion = 1; 
+			firmVersion = 1;
 			memset(ctlBuf, 0, sizeof(ctlBuf));
 			strncpy((char*)ctlBuf, "St", 2);
 			ctlBuf[13]=firmVersion;
 
 			d_temp_buff = new unsigned char[d_payload_size];   // allow it to hold up to payload_size bytes
 
-			d_socket = openSocket(host, port); 
-			c_socket = openSocket(host, c_port); 
-			rx_fir_socket = openSocket(host, rx_fir_port); 
-			tx_fir_socket = openSocket(host, tx_fir_port); 
+			d_socket = openSocket(host, port);
+			c_socket = openSocket(host, c_port);
+			rx_fir_socket = openSocket(host, rx_fir_port);
+			tx_fir_socket = openSocket(host, tx_fir_port);
 
 			for (int i=0;i<3;i++) {
-				(void) send( d_socket, "rr", 2, 0 );  // send return addr 
+				(void) send( d_socket, "rr", 2, 0 );  // send return addr
 				usleep(2000);
 			}
 
@@ -176,7 +176,7 @@ namespace gr {
 
 					if (byteMode==1) {
 						for (i=0;i < samples; i++) {
-							// 8 Bit -> Float 
+							// 8 Bit -> Float
 							int re = d_temp_buff[bi+0]<<24;
 							int im = d_temp_buff[bi+1]<<24;
 							re = re >> 8;
@@ -197,7 +197,7 @@ namespace gr {
 							continue;
 						return ret;
 					} else  if (byteMode == 2) {
-						// 16 Bit -> Float 
+						// 16 Bit -> Float
 						for (i=0;i < samples; i++) {
 							int re = (d_temp_buff[bi+0]<<16) + (d_temp_buff[bi+1]<<24);
 							int im = (d_temp_buff[bi+2]<<16) + (d_temp_buff[bi+3]<<24);
@@ -211,14 +211,14 @@ namespace gr {
 									memmove(outBuf, &outBuf[noutput_items], (outBufPos - noutput_items)*sizeof(gr_complex));
 								outBufPos -= noutput_items;
 								ret = noutput_items;
-							} 
+							}
 						}
 						if (ret == 0)
 							continue;
 						return ret;
 					} else {
 						for (i=0;i < samples; i++) {
-							// 24 Bit -> Float 
+							// 24 Bit -> Float
 							int re = (d_temp_buff[bi+0]<<8) + (d_temp_buff[bi+1]<<16) + (d_temp_buff[bi+2]<<24);
 							int im = (d_temp_buff[bi+3]<<8) + (d_temp_buff[bi+4]<<16) + (d_temp_buff[bi+5]<<24);
 
@@ -229,11 +229,11 @@ namespace gr {
 							outBuf[outBufPos++] = gr_complex(ref, imf);
 							if (outBufPos >= noutput_items) {
 								memcpy(out, outBuf, noutput_items*sizeof(gr_complex));
-								if (outBufPos - noutput_items > 0) 
+								if (outBufPos - noutput_items > 0)
 									memmove(outBuf, &outBuf[noutput_items], (outBufPos - noutput_items)*sizeof(gr_complex));
 								outBufPos -= noutput_items;
 								ret = noutput_items;
-							} 
+							}
 						}
 						if (ret == 0)
 							continue;
@@ -260,7 +260,7 @@ namespace gr {
 			lngr.l_linger = 0;
 			if(setsockopt(sock, SOL_SOCKET, SO_LINGER, &lngr, sizeof(linger)) == -1) {
 				if( errno != ENOPROTOOPT) {  // no SO_LINGER for SOCK_DGRAM on Windows
-					perror("hiqsdr: setsockopt"); 
+					perror("hiqsdr: setsockopt");
 					return 0;
 				}
 			}
@@ -336,7 +336,7 @@ namespace gr {
 
 		void source_impl::disconnect()
 		{
-			(void) send( d_socket, "ss", 2, 0 );  // stop 
+			(void) send( d_socket, "ss", 2, 0 );  // stop
 
 			// Send a few zero-length packets to signal receiver we are done
 			if(d_eof) {
@@ -368,10 +368,10 @@ namespace gr {
 
 			unsigned int ph = ((int)((float)(f) / (RX_CLOCK+clockCorr)*0x100000000LL+0.5)) & 0xffffffff;
 
-			ctlBuf[2] = (ph >> 0 ) & 0xff; 
-			ctlBuf[3] = (ph >> 8 ) & 0xff; 
-			ctlBuf[4] = (ph >> 16) & 0xff; 
-			ctlBuf[5] = (ph >> 24) & 0xff; 
+			ctlBuf[2] = (ph >> 0 ) & 0xff;
+			ctlBuf[3] = (ph >> 8 ) & 0xff;
+			ctlBuf[4] = (ph >> 16) & 0xff;
+			ctlBuf[5] = (ph >> 24) & 0xff;
 
 			hiqSend();
 		}
@@ -379,10 +379,10 @@ namespace gr {
 		void source_impl::setTXFreq(int f) {
 			unsigned int ph = ((int)((float)(f) / (RX_CLOCK+clockCorr)*0x100000000LL+0.5)) & 0xffffffff;
 
-			ctlBuf[6] = (ph >> 0 ) & 0xff; 
-			ctlBuf[7] = (ph >> 8 ) & 0xff; 
-			ctlBuf[8] = (ph >> 16) & 0xff; 
-			ctlBuf[9] = (ph >> 24) & 0xff; 
+			ctlBuf[6] = (ph >> 0 ) & 0xff;
+			ctlBuf[7] = (ph >> 8 ) & 0xff;
+			ctlBuf[8] = (ph >> 16) & 0xff;
+			ctlBuf[9] = (ph >> 24) & 0xff;
 
 			hiqSend();
 		}
@@ -435,20 +435,20 @@ namespace gr {
 
 		void source_impl::setPtt(bool on) {
 			ctlBuf[11] &= 0xf0;
-			ctlBuf[11] |= (cwMode ? TX_CW: TX_SSB); 
-			if (on) 
-				ctlBuf[11] |=  TX_PTT; 
-			if (firmVersion>0) 
-				ctlBuf[11] |= USE_EXT_IO; 
+			ctlBuf[11] |= (cwMode ? TX_CW: TX_SSB);
+			if (on)
+				ctlBuf[11] |=  TX_PTT;
+			if (firmVersion>0)
+				ctlBuf[11] |= USE_EXT_IO;
 			hiqSend();
 		}
 
 		void source_impl::setCWMode(bool cw) {
 			ctlBuf[11] &= 0xf0;
 			cwMode = cw;
-			ctlBuf[11] |= (cwMode ? TX_CW: TX_SSB); 
-			if (firmVersion>0) 
-				ctlBuf[11] |= USE_EXT_IO; 
+			ctlBuf[11] |= (cwMode ? TX_CW: TX_SSB);
+			if (firmVersion>0)
+				ctlBuf[11] |= USE_EXT_IO;
 			hiqSend();
 		}
 
@@ -504,15 +504,15 @@ namespace gr {
 
 		void source_impl::setPresel(int n) {
 
-			ctlBuf[14] = n; 
+			ctlBuf[14] = n;
 			hiqSend();
 		}
 
 		void source_impl::setAnt(bool on) {
 			if (on)
-				ctlBuf[16] |= HIQ_ANT; 
+				ctlBuf[16] |= HIQ_ANT;
 			else
-				ctlBuf[16] &= ~HIQ_ANT; 
+				ctlBuf[16] &= ~HIQ_ANT;
 			hiqSend();
 		}
 

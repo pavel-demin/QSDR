@@ -29,7 +29,7 @@ static void bin2hex(const unsigned char *from, int len, char *to) {
 
 void PDEBUGBUF (int Level, const char *comment, unsigned char *buf, unsigned int len) {
 #ifndef QT_NO_DEBUG
-#define LINELEN 128 
+#define LINELEN 128
 	char s[LINELEN+1];
 	int l=LINELEN/2;
 	unsigned int pos=0;
@@ -63,7 +63,7 @@ int ParityBit(unsigned int in)
 QStringList getAlsaAudioDevices() {
 	QStringList list;
 	char **hints;
-	
+
 	int err = snd_device_name_hint(-1, "pcm", (void***)&hints);
 	if (err != 0)
 		return list;

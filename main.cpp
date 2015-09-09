@@ -9,7 +9,7 @@
 void help(char *prog)
 {
     printf("usage: %s [-h] [-v debugLevel] [-s] [-g serverIP] [-p serverPort] [-k key]"
-	    "\n\n", 
+	    "\n\n",
 	    prog);
     printf("  -h                     display this help\n");
     printf("  -s                     start server only\n");

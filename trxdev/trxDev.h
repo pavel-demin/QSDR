@@ -39,4 +39,4 @@ public:
 	virtual void setCWMode(bool)=0;
 };
 
-#endif 
+#endif

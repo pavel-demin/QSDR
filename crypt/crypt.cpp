@@ -5,7 +5,7 @@ extern "C" {
 }
 
 
-int HashSHA256 (uint8 *value, int len, uint8* hashcode) 
+int HashSHA256 (uint8 *value, int len, uint8* hashcode)
 {
     sha256_state sha256State;
 
@@ -46,7 +46,7 @@ int VerifyHash (
 
     returnValue = ERR_OK;
     for (i=0; (uint32)i<sizeof(hash160); i++ )
-	if (hash160[i] != csign[i+1] ) 
+	if (hash160[i] != csign[i+1] )
 	    returnValue = ERR_CHK;
 
     return returnValue;
@@ -63,7 +63,7 @@ int SetHash ( ASN1 tbs, ASN1_BITSTRING signature, ASN1_AlgorithmIdentifier algor
 
     InitASN1Var(oid, ASN1_OBJECTIDENTIFIER);
     InitASN1Var(tmpoct, ASN1_OCTETSTRING);
-    
+
     ARG_UNUSED(algorithm);
 
     if (GetASN1DataLen (signature, &len)!=ASN_OK) goto EXIT;

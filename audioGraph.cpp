@@ -14,15 +14,15 @@ using namespace std;
 AudioGraph::AudioGraph(settings *s, int x, int y) {
 	int i;
 
-	xSize = x; 
+	xSize = x;
 	ySize = y;
 	sdrSettings = s;
 	//displayMode = GRAPH_WATERFALL;
 	nFFT = x;
 	fftPixmap = new QPixmap(xSize, ySize);
 	fftPixmap->fill(Qt::black);
-	mi = -300/20; 
-	tmi = mi; 
+	mi = -300/20;
+	tmi = mi;
 	ma = 0;
 	tma = ma;
 	audioPos = 0;
@@ -40,7 +40,7 @@ AudioGraph::~AudioGraph() {
 void AudioGraph::settingsChanged() {
 	double h,s,v;
 	average_time_max = sdrSettings->getIntVal    ("Display,Spectrum,averageTimeMax");
-	average_time = sdrSettings->getIntVal        ("Display,Spectrum,averageTime");	
+	average_time = sdrSettings->getIntVal        ("Display,Spectrum,averageTime");
 	colorSpecMax = QColor(sdrSettings->getVal    ("Display,Color,Spectrum,maximum"));
 	colorSpecAverage = QColor(sdrSettings->getVal("Display,Color,Spectrum,average"));
 	colorSpecBack = QColor(sdrSettings->getVal("Display,Color,Spectrum,background"));
@@ -99,7 +99,7 @@ QRectF AudioGraph::boundingRect() const {
 }
 
 void AudioGraph::setMin(int v) {	// dbm
-	tmi = v/20.0; 
+	tmi = v/20.0;
 	if (tmi>=tma) tma = tmi + 0.1;
 	base = -tmi;
 	scale = 256/(tma-tmi);
@@ -125,7 +125,7 @@ void AudioGraph::audioData(short sample) {
 		fftPixmap->fill(colorSpecBack);
 		QPainter painter(fftPixmap);
 		painter.setPen(colorSpecAverage);
-		for(i=1; i < xSize; i++) 
+		for(i=1; i < xSize; i++)
 			painter.drawLine(i-1,ySize/2 + 1L*audioBuf[i-1]*ySize/2/32768,i,ySize/2 + 1L*audioBuf[i]*ySize/2/32768);
 		update();
 		audioPos = 0;

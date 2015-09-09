@@ -45,10 +45,10 @@ private:
 	gr::uhd::usrp_sink::sptr usrpSink;
 	gr::uhd::usrp_source::sptr usrpSource;
 	gr::blocks::null_sink::sptr nullSink;
-	int sampleRate; 
+	int sampleRate;
 	qint64 centerFreq;
 	int presel;
 
 };
 
-#endif 
+#endif

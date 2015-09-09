@@ -7,7 +7,7 @@ TrxDev_file_sptr make_trxdev_file(int sampleRate, char *fileName) {
 
 TrxDev_file::TrxDev_file(int sRate, char* fileName) : TrxDev("FILE") {
 	sampleRate = sRate;
-	strncpy(fName, fileName, sizeof(fName)); 
+	strncpy(fName, fileName, sizeof(fName));
 
 	throttle = gr::blocks::throttle::make(sizeof(gr_complex), sampleRate);
 	fileSource = gr_make_sdrfile_source (sizeof(gr_complex), fileName, true);
@@ -43,18 +43,18 @@ void TrxDev_file::setPTT(int) { }
 void TrxDev_file::setTXPower(int) { }
 int TrxDev_file::getTXLowFreq() { return 0; }
 int TrxDev_file::getTXHighFreq() { return 0; }
-void TrxDev_file::setTXFreq(qint64) { } 
+void TrxDev_file::setTXFreq(qint64) { }
 void TrxDev_file::setTXRate(int) { }
 void TrxDev_file::setPresel(int) { }
 void TrxDev_file::setCWMode(bool) { }
 void TrxDev_file::setFreqCorr(int k) { }
-void TrxDev_file::setDCFilter(bool) { } 
+void TrxDev_file::setDCFilter(bool) { }
 
 void TrxDev_file::setPosition(int pos) {
 	lock();
 	fileSource->seek(pos*sampleRate, SEEK_SET);
 	unlock();
 }
-int TrxDev_file::getPosition() { 
+int TrxDev_file::getPosition() {
 	return fileSource->pos()/sampleRate;
 }

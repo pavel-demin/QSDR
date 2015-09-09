@@ -11,7 +11,7 @@ class Tx_null;
 typedef boost::shared_ptr<Tx_null> Tx_null_sptr;
 Tx_null_sptr make_tx_null(int sampleRate);
 
-class Tx_null : public Tx 
+class Tx_null : public Tx
 {
 
 public:

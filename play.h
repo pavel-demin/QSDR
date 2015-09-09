@@ -12,13 +12,13 @@ class play;
 class play : public QDialog
 {
     Q_OBJECT
-    
+
 public:
     explicit play(TrxProto::TrxMessage *msg, QStringList files, QWidget *parent = 0);
     ~play();
 	void setPlayFileLen(quint64);
 	void setPlayFilePos(quint64);
-    
+
 signals:
 	void playFile(QString);
 	void closed();

@@ -11,7 +11,7 @@ class Tx_lsb;
 typedef boost::shared_ptr<Tx_lsb> Tx_lsb_sptr;
 Tx_lsb_sptr make_tx_lsb(int sampleRate, int fMin, int fMax);
 
-class Tx_lsb : public Tx 
+class Tx_lsb : public Tx
 {
 
 public:
@@ -20,7 +20,7 @@ public:
 
 private:
 	int sampleRate;
-	gr::filter::fir_filter_fcc::sptr firFilter_fcc; 
+	gr::filter::fir_filter_fcc::sptr firFilter_fcc;
 	gr::filter::firdes *firdes;
 
 };

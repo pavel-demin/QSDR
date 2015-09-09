@@ -6,8 +6,8 @@
 #include "gnuradio.h"
 #include <gnuradio/digital/diff_decoder_bb.h>
 #include <gnuradio/analog/pll_freqdet_cf.h>
-#include "gr_rds_bpsk_demod.h"  
-#include "gr_rds_data_decoder.h"  
+#include "gr_rds_bpsk_demod.h"
+#include "gr_rds_data_decoder.h"
 #include "gr_rds_freq_divider.h"
 
 class Rx_wfmrds;
@@ -15,7 +15,7 @@ class Rx_wfmrds;
 typedef boost::shared_ptr<Rx_wfmrds> Rx_wfmrds_sptr;
 Rx_wfmrds_sptr make_rx_wfmrds(int sampleRate, gr::msg_queue::sptr msgq);
 
-class Rx_wfmrds : public Rx 
+class Rx_wfmrds : public Rx
 {
 
 public:
@@ -53,12 +53,12 @@ private:
 	gr::filter::fir_filter_fff::sptr rds_filter;
 	gr::blocks::sub_ff::sptr right;
 	gr::analog::probe_avg_mag_sqrd_c::sptr smeter;
-	
-	gr::filter::fir_filter_fcc::sptr filterPilotTone; 
+
+	gr::filter::fir_filter_fcc::sptr filterPilotTone;
 	gr::analog::pll_refout_cc::sptr pllPilotTone;
 	gr::blocks::complex_to_imag::sptr c2imag;
 	gr::blocks::complex_to_imag::sptr c2imag1;
-	gr::blocks::multiply_cc::sptr multic; 
+	gr::blocks::multiply_cc::sptr multic;
 
 	int sampleRate;
 };

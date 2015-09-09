@@ -25,8 +25,8 @@ typedef struct {
     int rxMode;
     int idx;
 	bool activ;
-    qint64 rxFreq; 
-    qint64 txFreq; 
+    qint64 rxFreq;
+    qint64 txFreq;
     qint64 centerFreq;
     int filterHi[MODE_LAST-1];
     int filterLo[MODE_LAST-1];
@@ -38,12 +38,12 @@ typedef struct {
 class QSdrImpl : public QMainWindow, public Ui::QSdr {
     Q_OBJECT
     public:
-	QSdrImpl(char *trx_addr=NULL, int trx_port=TRX_PORT, char *key=NULL, QWidget *parent = 0); 
+	QSdrImpl(char *trx_addr=NULL, int trx_port=TRX_PORT, char *key=NULL, QWidget *parent = 0);
 	~QSdrImpl();
-	
+
 	void readSettings();
 	void writeSettings();
-	
+
 	private slots:
 
 	void setRxFreq(qint64);
@@ -114,8 +114,8 @@ protected:
 	void changeEvent(QEvent *e);
 
 private:
-	void dispRxFreq(qint64 f); 
-	void dispTxFreq(qint64 f); 
+	void dispRxFreq(qint64 f);
+	void dispTxFreq(qint64 f);
 	void keyPressEvent(QKeyEvent *event);
 	void setFilterMarker();
 	void setFilter();
@@ -124,8 +124,8 @@ private:
 	void sendTrxMsg();
 
 	Ui::QSdr *ui;
-	QAudioOutput *audioOutput;	
-	QAudioInput *audioInput;	
+	QAudioOutput *audioOutput;
+	QAudioInput *audioInput;
 	QBuffer *audioOutBuffer, *audioInBuffer;
 	QIODevice *audioOutDev, *audioInDev;
 	QByteArray audioOutBuf;
@@ -154,7 +154,7 @@ private:
 	QPushButton *bandButtons[MAXBUTTON];
 	QHash<QString, QColor> colors;
 	play *playDialog;
-	
+
 	int activVFO;
 
 	double fftSize;

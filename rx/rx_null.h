@@ -10,7 +10,7 @@ class Rx_null;
 typedef boost::shared_ptr<Rx_null> Rx_null_sptr;
 Rx_null_sptr make_rx_null(int sampleRate);
 
-class Rx_null : public Rx 
+class Rx_null : public Rx
 {
 
 public:

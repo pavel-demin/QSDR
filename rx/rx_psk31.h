@@ -12,7 +12,7 @@ class Rx_psk31;
 typedef boost::shared_ptr<Rx_psk31> Rx_psk31_sptr;
 Rx_psk31_sptr make_rx_psk31(int sampleRate, Parent *p, cbF f);
 
-class Rx_psk31 : public Rx 
+class Rx_psk31 : public Rx
 {
 
 public:
@@ -37,7 +37,7 @@ private:
 	gr::blocks::complex_to_float::sptr c2f;
 	gr::analog::agc2_ff::sptr agc;
 	gr::analog::agc2_cc::sptr agc2;
-	gr::digital::costas_loop_cc::sptr costa; 
+	gr::digital::costas_loop_cc::sptr costa;
 	gr::blocks::stream_to_vector::sptr strToVect;
 	gr_psk31_decoder_sptr psk31Decoder;
 	gr_reader_i_sptr readerI;

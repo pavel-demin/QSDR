@@ -12,7 +12,7 @@ class TxSrc_mic;
 typedef boost::shared_ptr<TxSrc_mic> TxSrc_mic_sptr;
 TxSrc_mic_sptr make_txsrc_mic(char *devName);
 
-class TxSrc_mic : public TxSrc 
+class TxSrc_mic : public TxSrc
 {
 
 public:
@@ -22,7 +22,7 @@ public:
 
 private:
 	gr::audio::source::sptr  audioSourceMic;
-	gr_limit_ff_sptr limiter; 
+	gr_limit_ff_sptr limiter;
 
 };
 

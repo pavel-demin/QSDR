@@ -1,19 +1,19 @@
 /* -*- c++ -*- */
 /*
  * Copyright 2007,2008,2009,2010 Free Software Foundation, Inc.
- * 
+ *
  * This file is part of GNU Radio
- * 
+ *
  * GNU Radio is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
- * 
+ *
  * GNU Radio is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with GNU Radio; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street,
@@ -46,25 +46,25 @@
 class gr_hiqsdr_source;
 typedef boost::shared_ptr<gr_hiqsdr_source> gr_hiqsdr_source_sptr;
 
-HIQSDR_API gr_hiqsdr_source_sptr gr_make_hiqsdr_source(size_t itemsize, const char *host, 
+HIQSDR_API gr_hiqsdr_source_sptr gr_make_hiqsdr_source(size_t itemsize, const char *host,
 		unsigned short port, unsigned short c_port, unsigned short rx_fir_port, unsigned short tx_fir_port,
 		int payload_size=1472,
-		bool eof=true, bool wait=true, int rxfreq=7000000, int txfreq=7000000, int rate=48000, 
+		bool eof=true, bool wait=true, int rxfreq=7000000, int txfreq=7000000, int rate=48000,
 		bool ant=0, int presel=0, int att=0, int txLevel=255, bool ptt=0, int txRate=48000, int clockCorr=0,
 		std::vector<gr_complex> rxFirTaps=std::vector<gr_complex>() , std::vector<gr_complex> txFirTaps=std::vector<gr_complex>() );
 
 
 class HIQSDR_API gr_hiqsdr_source : public gr::sync_block {
 	friend gr_hiqsdr_source_sptr gr_make_hiqsdr_source(size_t itemsize,
-			const char *host, 
+			const char *host,
 			unsigned short port,
 			unsigned short c_port,
 			unsigned short rx_fir_port,
 			unsigned short tx_fir_port,
 			int payload_size,
 			bool eof, bool wait,
-			int rxfreq, int txfreq, int rate, 
-			bool ant, int presel, int att, 
+			int rxfreq, int txfreq, int rate,
+			bool ant, int presel, int att,
 			int txLevel, bool ptt, int txRate, int clockCorr,
 			std::vector<gr_complex> rxFirTaps, std::vector<gr_complex> txFirTaps);
 	private:
@@ -96,7 +96,7 @@ class HIQSDR_API gr_hiqsdr_source : public gr::sync_block {
 
 	void disconnect();
 	protected:
-	gr_hiqsdr_source(size_t itemsize, const char *host, 
+	gr_hiqsdr_source(size_t itemsize, const char *host,
 			unsigned short port, unsigned short c_port, unsigned short rx_fir_port,
 			unsigned short tx_fir_port,
 			int payload_size, bool eof, bool wait, int rxfreq, int txfreq, int rate,

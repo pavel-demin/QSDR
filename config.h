@@ -3,7 +3,7 @@
 
 #define VERSION        		"1.1.0"
 
-#define MAX_FFT 			(1024*8)	
+#define MAX_FFT 			(1024*8)
 #define MAX_MEM 			100
 #define AUDIO_RATE			48000
 #define REMOTE_AUDIO_RATE	8000
@@ -12,12 +12,12 @@
 #define DEFAULT_SAMPLE_RATE	(48000)
 #define RX_CLOCK			122880000LL
 
-#define HIQSDR_RX_PORT		0xbc77 
-#define HIQSDR_CTL_PORT		0xbc78 
-#define HIQSDR_TX_PORT		0xbc79 
-#define HIQSDR_RAW_PORT		0xbc7a 
-#define HIQSDR_RX_FIR_PORT	0xbc7b 
-#define HIQSDR_TX_FIR_PORT	0xbc7c 
+#define HIQSDR_RX_PORT		0xbc77
+#define HIQSDR_CTL_PORT		0xbc78
+#define HIQSDR_TX_PORT		0xbc79
+#define HIQSDR_RAW_PORT		0xbc7a
+#define HIQSDR_RX_FIR_PORT	0xbc7b
+#define HIQSDR_TX_FIR_PORT	0xbc7c
 
 #define HIQSCOPE_RAW_PORT	22222
 
@@ -34,8 +34,8 @@
 #define MAX_VFO 			4
 #define MAXBUTTON			20
 
-#define NBUTTON			(sdrSettings->getIntVal("Band,BandButtons"))	
-#define CW_TONE			(sdrSettings->getIntVal("Config,CWTone"))	
+#define NBUTTON			(sdrSettings->getIntVal("Band,BandButtons"))
+#define CW_TONE			(sdrSettings->getIntVal("Config,CWTone"))
 
 #define RAW_SRC_FULL	0
 #define RAW_SRC_CIC_A	1

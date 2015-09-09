@@ -9,7 +9,7 @@ TrxDev_osmosdr::TrxDev_osmosdr(int sRate, int freqCorr) : TrxDev("OSMOSDR") {
 	qDebug() << "IN OSMO";
 	sampleRate = sRate;
 
-	osmoSdrSource = osmosdr::source::make();	
+	osmoSdrSource = osmosdr::source::make();
 	nullSink = gr::blocks::null_sink::make (sizeof(gr_complex));
 	multi = gr::blocks::multiply_const_cc::make (1/256.0);
 

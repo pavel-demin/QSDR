@@ -5,11 +5,11 @@ gnuradio-core/src/lib/runtime/gr_flat_flowgraph.cc
 - New concept for settings
 - second rx
 - OSMSDR supported
-- WFM-stereo support with RDS 
+- WFM-stereo support with RDS
 - IQ-output to Soundcard
 - Gnuradio 3.6.x
 - Preselector support
-- new RX-Samplerates up to 1920000 (16Bit) and 3860000 (8Bit) 
+- new RX-Samplerates up to 1920000 (16Bit) and 3860000 (8Bit)
 
 0.9.5
 

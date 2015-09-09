@@ -1,19 +1,19 @@
 /* -*- c++ -*- */
 /*
  * Copyright 2004 Free Software Foundation, Inc.
- * 
+ *
  * This file is part of GNU Radio
- * 
+ *
  * GNU Radio is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * GNU Radio is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with GNU Radio; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
@@ -23,7 +23,7 @@
 
 /*
  * This source block creates the baseband RDS signal.
- * 
+ *
  * It reads its configuration from an XML file; composes the infowords;
  * calculates checkwords; merges the two into blocks and then groups;
  * and streams out the resulting buffer.
@@ -90,7 +90,7 @@ gr_rds_data_encoder::gr_rds_data_encoder (const char *xmlfile)
 		}
 	}
 	d_current_buffer=0;
-	
+
 }
 
 gr_rds_data_encoder::~gr_rds_data_encoder () {
@@ -249,7 +249,7 @@ int gr_rds_data_encoder::read_xml (const char *xmlfile){
 //////////////////////  CREATE DATA GROUPS  ///////////////////////
 
 /* see Annex B, page 64 of the standard */
-unsigned int gr_rds_data_encoder::calc_syndrome(unsigned long message, 
+unsigned int gr_rds_data_encoder::calc_syndrome(unsigned long message,
 			unsigned char mlen){
 	unsigned long reg=0;
 	unsigned int i;
@@ -304,7 +304,7 @@ void gr_rds_data_encoder::count_groups(void){
  * then calculate checkwords and put everything in the groups */
 void gr_rds_data_encoder::create_group(const int group_type, const bool AB){
 	int i=0;
-	
+
 	infoword[0]=PI;
 	infoword[1]=(((group_type&0xf)<<12)|(AB<<11)|(TP<<10)|(PTY<<5));
 
@@ -360,12 +360,12 @@ void gr_rds_data_encoder::prepare_group2(const bool AB){
 }
 
 /* see page 28 and Annex G, page 81 in the standard */
-/* FIXME this is supposed to be transmitted only once per minute, when 
+/* FIXME this is supposed to be transmitted only once per minute, when
  * the minute changes */
 void gr_rds_data_encoder::prepare_group4a(void){
 	time_t rightnow;
 	tm *utc;
-	
+
 	time(&rightnow);
 	printf("%s", asctime(localtime(&rightnow)));
 
@@ -378,10 +378,10 @@ void gr_rds_data_encoder::prepare_group4a(void){
 	int M=utc->tm_mon+1;	// January: M=0
 	int Y=utc->tm_year;
 	double toffset=localtime(&rightnow)->tm_hour-h;
-	
+
 	int L=((M==1)||(M==2))?1:0;
 	int mjd=14956+D+int((Y-L)*365.25)+int((M+1+L*12)*30.6001);
-	
+
 	infoword[1]=infoword[1]|((mjd>>15)&0x3);
 	infoword[2]=(((mjd>>7)&0xff)<<8)|((mjd&0x7f)<<1)|((h>>4)&0x1);
 	infoword[3]=((h&0xf)<<12)|(((m>>2)&0xf)<<8)|((m&0x3)<<6)|
@@ -399,7 +399,7 @@ void gr_rds_data_encoder::prepare_buffer(int which){
 	int q=0, i=0, j=0, a=0, b=0;
 	unsigned char temp[13];	// 13*8=104
 	for(i=0; i<13; i++) temp[i]=0;
-	
+
 	for (q=0;q<104;q++){
 		a=floor(q/26); b=25-q%26;
 		buffer[which][q]=(unsigned char)(block[a]>>b)&0x1;
@@ -417,7 +417,7 @@ int gr_rds_data_encoder::work (int noutput_items,
 					gr_vector_void_star &output_items)
 {
 	unsigned char *out = (unsigned char *) output_items[0];
-	
+
 	for(int i=0; i<noutput_items; i++){
 		out[i]=buffer[d_current_buffer][d_buffer_bit_counter];
 		if(++d_buffer_bit_counter>103){
@@ -426,6 +426,6 @@ int gr_rds_data_encoder::work (int noutput_items,
 			d_current_buffer=d_current_buffer%nbuffers;
 		}
 	}
-	
+
 	return noutput_items;
 }

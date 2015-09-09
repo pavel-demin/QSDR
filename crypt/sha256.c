@@ -39,7 +39,7 @@
      ((unsigned char*)(y))[1] = ((unsigned char*)(&x))[2]; \
      ((unsigned char*)(y))[2] = ((unsigned char*)(&x))[1]; \
      ((unsigned char*)(y))[3] = ((unsigned char*)(&x))[0]; } \
-     
+
 
 #define LOAD32H(x, y)  \
    { ((unsigned char*)(&x))[0] = ((unsigned char*)(y))[3]; \
@@ -76,7 +76,7 @@ static const uint32 K[64] = {
 
 /* Various logical functions */
 #define Ch(x,y,z)       (z ^ (x & (y ^ z)))
-#define Maj(x,y,z)      (((x | y) & z) | (x & y)) 
+#define Maj(x,y,z)      (((x | y) & z) | (x & y))
 #define S(x, n)         RORc((x),(n))
 #define R(x, n)         (((x)&0xFFFFFFFFUL)>>(n))
 #define Sigma0(x)       (S(x, 2) ^ S(x, 13) ^ S(x, 22))
@@ -106,10 +106,10 @@ static void  sha256_compress(sha256_state * md, unsigned char *buf)
     /* fill W[16..63] */
     for (i = 16; i < 64; i++) {
         W[i] = Gamma1(W[i - 2]) + W[i - 7] + Gamma0(W[i - 15]) + W[i - 16];
-    }        
+    }
 
     /* Compress */
-#ifdef LTC_SMALL_CODE   
+#ifdef LTC_SMALL_CODE
 #define RND(a,b,c,d,e,f,g,h,i)                         \
      t0 = h + Sigma1(e) + Ch(e, f, g) + K[i] + W[i];   \
      t1 = Sigma0(a) + Maj(a, b, c);                    \
@@ -118,10 +118,10 @@ static void  sha256_compress(sha256_state * md, unsigned char *buf)
 
      for (i = 0; i < 64; ++i) {
          RND(S[0],S[1],S[2],S[3],S[4],S[5],S[6],S[7],i);
-         t = S[7]; S[7] = S[6]; S[6] = S[5]; S[5] = S[4]; 
+         t = S[7]; S[7] = S[6]; S[6] = S[5]; S[5] = S[4];
          S[4] = S[3]; S[3] = S[2]; S[2] = S[1]; S[1] = S[0]; S[0] = t;
-     }  
-#else 
+     }
+#else
 #define RND(a,b,c,d,e,f,g,h,i,ki)                    \
      t0 = h + Sigma1(e) + Ch(e, f, g) + ki + W[i];   \
      t1 = Sigma0(a) + Maj(a, b, c);                  \
@@ -193,9 +193,9 @@ static void  sha256_compress(sha256_state * md, unsigned char *buf)
     RND(S[2],S[3],S[4],S[5],S[6],S[7],S[0],S[1],62,0xbef9a3f7);
     RND(S[1],S[2],S[3],S[4],S[5],S[6],S[7],S[0],63,0xc67178f2);
 
-#undef RND     
-    
-#endif     
+#undef RND
+
+#endif
 
     /* feedback */
     for (i = 0; i < 8; i++) {
@@ -304,7 +304,7 @@ void sha256_done(sha256_state * md, uint8 *out)
 /**
   Self-test the hash
   @return CRYPT_OK if successful, CRYPT_NOP if self-tests have been disabled
-*/  
+*/
 
 #if 0
 void sha256_test(void)
@@ -320,9 +320,9 @@ void sha256_test(void)
         0xb4, 0x10, 0xff, 0x61, 0xf2, 0x00, 0x15, 0xad }
     },
     { "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq",
-      { 0x24, 0x8d, 0x6a, 0x61, 0xd2, 0x06, 0x38, 0xb8, 
+      { 0x24, 0x8d, 0x6a, 0x61, 0xd2, 0x06, 0x38, 0xb8,
         0xe5, 0xc0, 0x26, 0x93, 0x0c, 0x3e, 0x60, 0x39,
-        0xa3, 0x3c, 0xe4, 0x59, 0x64, 0xff, 0x21, 0x67, 
+        0xa3, 0x3c, 0xe4, 0x59, 0x64, 0xff, 0x21, 0x67,
         0xf6, 0xec, 0xed, 0xd4, 0x19, 0xdb, 0x06, 0xc1 }
     },
   };

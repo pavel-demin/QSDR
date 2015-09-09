@@ -11,7 +11,7 @@ class Tx_usb;
 typedef boost::shared_ptr<Tx_usb> Tx_usb_sptr;
 Tx_usb_sptr make_tx_usb(int sampleRate, int fMin, int fMax);
 
-class Tx_usb : public Tx 
+class Tx_usb : public Tx
 {
 
 public:
@@ -20,7 +20,7 @@ public:
 
 private:
 	int sampleRate;
-	gr::filter::fir_filter_fcc::sptr firFilter_fcc; 
+	gr::filter::fir_filter_fcc::sptr firFilter_fcc;
 	gr::filter::firdes *firdes;
 
 };

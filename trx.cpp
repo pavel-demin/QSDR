@@ -31,7 +31,7 @@
 #ifdef OSMOSDR
 #include "trxDev_osmosdr.h"
 #endif
-#ifdef USRP 
+#ifdef USRP
 #include "trxDev_usrp.h"
 #endif
 #include "trxDev_hiqsdr.h"
@@ -54,9 +54,9 @@ Trx::Trx(int port, char *key)  {
 		hashKey = QByteArray(key);
 
 	fftSize	= 2048;
-	in  = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * fftSize*2); 
-	out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * fftSize*2); 
-	plan = fftw_plan_dft_1d(fftSize*2, in, out, FFTW_FORWARD, FFTW_ESTIMATE); 
+	in  = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * fftSize*2);
+	out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * fftSize*2);
+	plan = fftw_plan_dft_1d(fftSize*2, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
 
 	rawSrc = RAW_SRC_FULL;
 	raw = false;
@@ -85,7 +85,7 @@ Trx::Trx(int port, char *key)  {
 	playFileName   = "default.raw";
 
 	rxSource     = SRC_NULL;
-	oldSource    = rxSource; 
+	oldSource    = rxSource;
 
 	sampleRate = DEFAULT_SAMPLE_RATE;
 
@@ -110,8 +110,8 @@ Trx::Trx(int port, char *key)  {
 	filterLo  = 300;
 	filterCut = 500;
 	preamp = 0;
-	rxFreq	= centerFreq; 
-	txFreq	= centerFreq; 
+	rxFreq	= centerFreq;
+	txFreq	= centerFreq;
 	rxMode = MODE_USB;
 	squelchVal=-100;
 	filterNotchFreq = 5000;
@@ -136,7 +136,7 @@ Trx::Trx(int port, char *key)  {
 	decay_rate_fast = 0.1;
 	reference_fast = 0.1;
 
-	ssbFMax = 2800; 
+	ssbFMax = 2800;
 	ssbFMin = 300;
 
 	recordTX = false;
@@ -147,11 +147,11 @@ Trx::Trx(int port, char *key)  {
 	smtrCal = 0;
 
 	nullSink = gr::blocks::null_sink::make (sizeof(gr_complex));
-	
+
 	window.clear();
-	for (int i=0;i<fftSize;i++) 
+	for (int i=0;i<fftSize;i++)
 		window.push_back(0.5  - 0.5  * cos (2 * M_PI / fftSize * i));  // Hanning window
-	fft = gr::fft::fft_vcc::make(fftSize, true, window, false); 
+	fft = gr::fft::fft_vcc::make(fftSize, true, window, false);
 
 	strToVect = gr::blocks::stream_to_vector::make (sizeof(gr_complex), fftSize);
 	limiterL = gr_make_limit_ff(0.8);
@@ -189,8 +189,8 @@ Trx::Trx(int port, char *key)  {
 
 	for (int i=0;i<MAX_VFO;i++) {
 		activ[i] = false;
-		rx[i] = make_rx_null(sampleRate); 
-		tx[i] = make_tx_null(1); 
+		rx[i] = make_rx_null(sampleRate);
+		tx[i] = make_tx_null(1);
 		tb->connect(trxDev, 0, rx[i], 0);
 		tb->connect(rx[i], 0, rxAdderL, i);
 		tb->connect(rx[i], 1, rxAdderR, i);
@@ -201,7 +201,7 @@ Trx::Trx(int port, char *key)  {
 	tb->connect(multiR, 0, limiterR, 0);
 	tb->connect(limiterL, 0, rxSink, 0);
 	tb->connect(limiterR, 0, rxSink, 1);
-	
+
 	tb->connect(trxDev, 0, strToVect, 0);
 	tb->connect(strToVect, 0, keepOneInN, 0);
 	tb->connect(keepOneInN, 0, fft, 0);
@@ -255,9 +255,9 @@ void Trx::setActiv(bool v) {
 void Trx::setRxFreq(qint64 f) {
 	PDEBUG(MSG1, "TRX: rx    :%lli",f);
 	rxFreq = f;
-	if (rxFreq - centerFreq > sampleRate/2) 
+	if (rxFreq - centerFreq > sampleRate/2)
 		setCenterFreq(f);
-	if (rxFreq - centerFreq < -sampleRate/2) 
+	if (rxFreq - centerFreq < -sampleRate/2)
 		setCenterFreq(f);
 	rx[vfo]->setFreq(rxFreq - centerFreq);
 }
@@ -296,7 +296,7 @@ void Trx::setTxSource(ETxSource src) {
 
 	if (etxSource == src)
 		return;
-	
+
 	etxSource = src;
 	if (send) {
 		tb->disconnect(txSrc, 0, multiTX, 0);
@@ -354,41 +354,41 @@ void Trx::setMode(int m) {
 	rx[vfo].reset();
 	tx[vfo].reset();
 	if (!activ[vfo]) {
-		rx[vfo] = make_rx_null(sampleRate); 
-		tx[vfo] = make_tx_null(1); 
+		rx[vfo] = make_rx_null(sampleRate);
+		tx[vfo] = make_tx_null(1);
 	} else {
 		switch (rxMode) {
 			case MODE_USB:
-				rx[vfo] = make_rx_usb(sampleRate); 
-				tx[vfo] = make_tx_usb(txSampleRate, ssbFMin, ssbFMax); 
+				rx[vfo] = make_rx_usb(sampleRate);
+				tx[vfo] = make_tx_usb(txSampleRate, ssbFMin, ssbFMax);
 				break;
 			case MODE_LSB:
-				rx[vfo] = make_rx_lsb(sampleRate); 
-				tx[vfo] = make_tx_lsb(txSampleRate, ssbFMin, ssbFMax); 
+				rx[vfo] = make_rx_lsb(sampleRate);
+				tx[vfo] = make_tx_lsb(txSampleRate, ssbFMin, ssbFMax);
 				break;
 			case MODE_AM:
-				rx[vfo] = make_rx_am(sampleRate); 
-				tx[vfo] = make_tx_am(txSampleRate, ssbFMax); 
+				rx[vfo] = make_rx_am(sampleRate);
+				tx[vfo] = make_tx_am(txSampleRate, ssbFMax);
 				break;
 			case MODE_NFM:
-				rx[vfo] = make_rx_fm(sampleRate); 
-				tx[vfo] = make_tx_fm(txSampleRate, ssbFMax); 
+				rx[vfo] = make_rx_fm(sampleRate);
+				tx[vfo] = make_tx_fm(txSampleRate, ssbFMax);
 				break;
 			case MODE_CW:
-				rx[vfo] = make_rx_cw(sampleRate); 
-				tx[vfo] = make_tx_null(txSampleRate); 
+				rx[vfo] = make_rx_cw(sampleRate);
+				tx[vfo] = make_tx_null(txSampleRate);
 				break;
 			case MODE_WFM_RDS:
-				rx[vfo] = make_rx_wfmrds(sampleRate, rdsMsgq); 
-				tx[vfo] = make_tx_null(txSampleRate); 
+				rx[vfo] = make_rx_wfmrds(sampleRate, rdsMsgq);
+				tx[vfo] = make_tx_null(txSampleRate);
 				break;
 			case MODE_RAW:
-				rx[vfo] = make_rx_raw(sampleRate); 
-				tx[vfo] = make_tx_null(txSampleRate); 
+				rx[vfo] = make_rx_raw(sampleRate);
+				tx[vfo] = make_tx_null(txSampleRate);
 				break;
 			default:
-				rx[vfo] = make_rx_null(sampleRate); 
-				tx[vfo] = make_tx_null(txSampleRate); 
+				rx[vfo] = make_rx_null(sampleRate);
+				tx[vfo] = make_tx_null(txSampleRate);
 				break;
 
 		}
@@ -551,7 +551,7 @@ void Trx::setTRXDev(RxSrc src) {
 			trxDev = make_trxdev_hiqsdr(sampleRate, hiqip);
 			trxDev->setFreqCorr(hiqsdrFreqCorr);
 			break;
-		case SRC_FILE: 
+		case SRC_FILE:
 			trxDev = make_trxdev_file(sampleRate, playFileName.toLatin1().data());
 			guiMsg->set_playfilelen(QFileInfo(playFileName).size()/sampleRate/sizeof(gr_complex));
 			break;
@@ -607,12 +607,12 @@ void Trx::setFFTSize(int n) {
 
 	if ((rawSrc == RAW_SRC_FULL) && raw) {
 		fftw_destroy_plan(plan);
-		fftw_free(in); 
+		fftw_free(in);
 		fftw_free(out);
-		in  = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * fftSize*2); 
-		out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * fftSize*2); 
-		plan = fftw_plan_dft_1d(fftSize*2, in, out, FFTW_FORWARD, FFTW_ESTIMATE); 	
-		for (int i=0;i<fftSize*2;i++) 
+		in  = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * fftSize*2);
+		out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * fftSize*2);
+		plan = fftw_plan_dft_1d(fftSize*2, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
+		for (int i=0;i<fftSize*2;i++)
 			window.push_back(0.5  - 0.5  * cos (2 * M_PI / (fftSize*2) * i));  // Hanning window
 	} else {
 		// reconfigure fftSize
@@ -622,11 +622,11 @@ void Trx::setFFTSize(int n) {
 		tb->disconnect(keepOneInN, 0, fft, 0);
 		tb->disconnect(fft, 0, fftSink, 0);
 
-		for (int i=0;i<fftSize;i++) 
+		for (int i=0;i<fftSize;i++)
 			window.push_back(0.5  - 0.5  * cos (2 * M_PI / fftSize * i));  // Hanning window
 
 		fft.reset();
-		fft = gr::fft::fft_vcc::make(fftSize, true, window, false); 
+		fft = gr::fft::fft_vcc::make(fftSize, true, window, false);
 		strToVect.reset();
 		strToVect = gr::blocks::stream_to_vector::make (sizeof(gr_complex), fftSize);
 		fftSink.reset();
@@ -709,7 +709,7 @@ void Trx::setTX(bool on) {
 			multiR->set_k(0);
 		}
 		trxDev->setPTT(true);
-	} 
+	}
 }
 
 void Trx::setAntenne(int v) {
@@ -779,12 +779,12 @@ void Trx::settingsChanged(QString settings) {
 		if (st == "Trx,TX,monitor") monitor = val.toInt();
 		if (st == "Trx,TX,sampleRate") txSampleRate = val.toInt();
 
-		if (st ==  "Device,OSMOSDR,freqCorr") { 
+		if (st ==  "Device,OSMOSDR,freqCorr") {
 			osmoFreqCorr = val.toInt();
 			if (rxSource == SRC_OSMOSDR)
 				trxDev->setFreqCorr(hiqsdrFreqCorr);
 		}
-		if (st ==  "Device,HiQSDR,freqCorr") { 
+		if (st ==  "Device,HiQSDR,freqCorr") {
 			hiqsdrFreqCorr = val.toInt();
 			if (rxSource == SRC_HIQSDR)
 				trxDev->setFreqCorr(hiqsdrFreqCorr);
@@ -853,7 +853,7 @@ void Trx::settingsChanged(QString settings) {
 
 QString Trx::getInfos() {
 	char buf[128];
-		
+
 	gr::message::sptr msg;
 	msg = rdsMsgq->delete_head_nowait();
 	if (msg!=0) {
@@ -948,7 +948,7 @@ void Trx::readGuiData() {
 					setTX(trxMsg.ptt());
 				if (trxMsg.has_settings())
 					settingsChanged(QByteArray(trxMsg.settings().data()));
-				if (trxMsg.has_playfilename()) 
+				if (trxMsg.has_playfilename())
 					playFileName = QString(trxMsg.playfilename().c_str());
 				if (trxMsg.has_recordfilename())
 					recordFileName = QString(trxMsg.recordfilename().c_str());
@@ -991,9 +991,9 @@ void Trx::readGuiData() {
 void Trx::sendGuiMsg() {
 	uint8 header[4];
 
-	if (guiMsg->ByteSize() == 0) 
+	if (guiMsg->ByteSize() == 0)
 		return;
-	if (sendData) { 
+	if (sendData) {
 		std::ostringstream out;
 		guiMsg->SerializeToOstream(&out);
 		QByteArray byteArray(out.str().c_str(), out.str().size());
@@ -1064,17 +1064,17 @@ void Trx::timeout() {
 			break;
 		msga = rxMsgq->delete_head_nowait();
 	}
-	if (rxMsgq->count()>10) 
+	if (rxMsgq->count()>10)
 		rxMsgq->flush();
 	if (pos>0)
 		guiMsg->set_audio(buf, pos);
 
 	gr::message::sptr msg;
 	msg = rdsMsgq->delete_head_nowait();
-	if (msg!=0) 
+	if (msg!=0)
 		guiMsg->set_displaytext((void*)msg->msg(), msg->length());
 
-	if (rxSource == SRC_FILE) { 
+	if (rxSource == SRC_FILE) {
 		guiMsg->set_playfilepos(trxDev->getPosition());
 	}
 

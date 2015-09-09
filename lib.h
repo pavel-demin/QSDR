@@ -13,7 +13,7 @@
 void PDEBUG  (int Level, const char *Format, ... );
 void PDEBUGBUF (int Level, const char *comment, unsigned char *buf, unsigned int len);
 int ParityBit(unsigned int in);
-extern int debugLevel; 
+extern int debugLevel;
 QStringList getAlsaAudioDevices();
 int min(int,int);
 unsigned char min(unsigned char a, unsigned char b);

@@ -12,8 +12,8 @@ TrxDev_usrp_sptr make_trxdev_usrp(int sampleRate) {
 TrxDev_usrp::TrxDev_usrp(int sRate ) : TrxDev("USRP") {
 	is_ready = false;
 	sampleRate = sRate;
-	//uhd::device_addr_t addr("master_clock_rate=30.72e6"); 
-	uhd::device_addr_t addr("master_clock_rate=15.36e6"); 
+	//uhd::device_addr_t addr("master_clock_rate=30.72e6");
+	uhd::device_addr_t addr("master_clock_rate=15.36e6");
 
 	usrpSource = gr::uhd::usrp_source::make (addr, uhd::stream_args_t("fc32"));
 	usrpSink = gr::uhd::usrp_sink::make (addr, uhd::stream_args_t("fc32"));

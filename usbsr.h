@@ -8,7 +8,7 @@ extern "C" {
 
 class UsbSR {
     public:
-	UsbSR (); 
+	UsbSR ();
 	~UsbSR();
 	int open();
 	void setFreq(int f);

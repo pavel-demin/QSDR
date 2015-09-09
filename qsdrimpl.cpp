@@ -26,7 +26,7 @@ QSdrImpl::QSdrImpl(char *trx_addr, int trx_port, char *key, QWidget *parent) : Q
 
 	if (trx_addr == NULL) {
 		// Gui + TRX
-		trx = new Trx(trx_port, key); 
+		trx = new Trx(trx_port, key);
 		trxAddr = QHostAddress("127.0.0.1");
 	} else {
 		// Gui only
@@ -76,12 +76,12 @@ QSdrImpl::QSdrImpl(char *trx_addr, int trx_port, char *key, QWidget *parent) : Q
 	dcfReg=0;
 	waterfallMin = -90;
 	waterfallMax = -40;
-	
+
 	eqLo=100;
 	eqMi=100;
 	eqHi=100;
 
-	ui->setupUi(this);  
+	ui->setupUi(this);
 
 	sdrSettings = new settings(ui->treeViewSettings);
 	for (i=0;i<MAX_MEM;i++) {
@@ -89,8 +89,8 @@ QSdrImpl::QSdrImpl(char *trx_addr, int trx_port, char *key, QWidget *parent) : Q
 		cur->name = QString("mem %1").arg(i);
 		cur->idx = i;
 		cur->rxMode = MODE_LSB;
-		cur->rxFreq = 7100000; 
-		cur->txFreq = cur->rxFreq; 
+		cur->rxFreq = 7100000;
+		cur->txFreq = cur->rxFreq;
 		cur->centerFreq = cur->rxFreq;
 		cur->preamp = 0;
 		cur->ant = 1;
@@ -128,7 +128,7 @@ QSdrImpl::QSdrImpl(char *trx_addr, int trx_port, char *key, QWidget *parent) : Q
 		else
 			cur->rxMode = MODE_USB;
 		cur->rxFreq = sdrSettings->getIntVal(QString("Band,%1,min").arg(i+1));
-		cur->txFreq = cur->rxFreq; 
+		cur->txFreq = cur->rxFreq;
 		cur->centerFreq = cur->rxFreq;
 		cur->preamp = 0;
 		cur->ant = 1;
@@ -156,7 +156,7 @@ QSdrImpl::QSdrImpl(char *trx_addr, int trx_port, char *key, QWidget *parent) : Q
 		cur->filterLo[MODE_WFM_RDS]  = 100;
 		cur->filterCut[MODE_WFM_RDS] = 10000;
 	}
-	
+
 	for (i=0;i<MAX_VFO;i++) {
 		cur = &vfoMem[i];
 		cur->activ = false;
@@ -169,11 +169,11 @@ QSdrImpl::QSdrImpl(char *trx_addr, int trx_port, char *key, QWidget *parent) : Q
 	cur = &curMem;
 
 	readSettings();
-	QByteArray hiqip = hiqsdrIP.toLocal8Bit(); 
+	QByteArray hiqip = hiqsdrIP.toLocal8Bit();
 
-	old = 512;  
+	old = 512;
 	ui->dialFreq->setSliderPosition(512);
-	
+
 	bandButtonsGroup = new QButtonGroup();
 	QGridLayout *bandGrid = new QGridLayout(ui->groupBoxBand);
 	for (i=0;i<NBUTTON;i++) {
@@ -182,7 +182,7 @@ QSdrImpl::QSdrImpl(char *trx_addr, int trx_port, char *key, QWidget *parent) : Q
 		bandButtonsGroup->addButton(button,i);
 		bandButtons[i]=button;
 	}
-	
+
 
 	for (i=0; sizeof(nfft)/sizeof(nfft[0]); i++)
 		if (fftSize == nfft[i]) {
@@ -198,11 +198,11 @@ QSdrImpl::QSdrImpl(char *trx_addr, int trx_port, char *key, QWidget *parent) : Q
 	fftGraph = new FFTGraph(sdrSettings, fftSize, fftGraphHigh);
 	filterGraph = new FilterGraph(sdrSettings, fftSize, fftGraphHigh);
 	filterGraph->setAudioFormat (sampleRate);
-	
+
 	fftGraph1 = new FFTGraph(sdrSettings, fftSize, fftGraphHigh);
 	filterGraph1 = new FilterGraph(sdrSettings, fftSize, fftGraphHigh);
 	filterGraph1->setAudioFormat (sampleRate);
-	
+
 	connect(sdrSettings, SIGNAL(changed()), this, SLOT(settingsChanged()));
 	connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(onExit()));
 	connect(filterGraph, SIGNAL(freqChanged(qint64)), this, SLOT(freqChanged(qint64)), Qt::QueuedConnection);
@@ -248,7 +248,7 @@ QSdrImpl::QSdrImpl(char *trx_addr, int trx_port, char *key, QWidget *parent) : Q
 	sceneFFT->addItem(filterGraph);
 	ui->graphicsViewFFT->setMouseTracking(true);
 	ui->graphicsViewFFT->setScene(sceneFFT);
-	
+
 	sceneFFT1 = new QGraphicsScene();
 	sceneFFT1->setItemIndexMethod(QGraphicsScene::NoIndex);
 	sceneFFT1->addItem(fftGraph1);
@@ -320,7 +320,7 @@ QSdrImpl::QSdrImpl(char *trx_addr, int trx_port, char *key, QWidget *parent) : Q
 
 	QList<QAudioDeviceInfo> audioDevicesOut =  QAudioDeviceInfo::availableDevices(QAudio::AudioOutput);
 	QList<QAudioDeviceInfo> audioDevicesIn =  QAudioDeviceInfo::availableDevices(QAudio::AudioInput);
-	
+
 	int inIdx = sdrSettings->getIntVal(QString("Device,AudioDev,GUI,Input"));
 	if (inIdx>=audioDevicesIn.size())
 		inIdx = 0;
@@ -346,7 +346,7 @@ QSdrImpl::QSdrImpl(char *trx_addr, int trx_port, char *key, QWidget *parent) : Q
 	audioOutDev = NULL;
 	if ((ERxSink)sdrSettings->getIntVal("Trx,RX,Sink") == RX_SINK_IP)
 		audioOutDev = audioOutput->start();
-	
+
 	setVolume(volumeLast);
 	show();
 	this->setFocus();
@@ -364,7 +364,7 @@ QSdrImpl::QSdrImpl(char *trx_addr, int trx_port, char *key, QWidget *parent) : Q
 	this->setAutoFillBackground(true);
 	this->setPalette(p);
 
-	
+
 	bool tx = isTx();
 	ui->groupBoxTx->setEnabled(tx);
 	ui->lcdNumberTX->setEnabled(tx);
@@ -426,7 +426,7 @@ void QSdrImpl::timeout() {		// 50ms
 	unsigned char buf[32*1024];
 	static int cnt=0;
 
-	if (cnt++ > 10) { 
+	if (cnt++ > 10) {
 		cnt = 0;
 
 		trxMsg->set_keepalive(true);
@@ -435,7 +435,7 @@ void QSdrImpl::timeout() {		// 50ms
 			*dt = QDateTime::currentDateTime().toUTC();
 			ui->labelTimezoneView->setText("UTC ");
 		} else {
-			ui->labelTimezoneView->setText("Local "); 
+			ui->labelTimezoneView->setText("Local ");
 			*dt = QDateTime::currentDateTime();
 		}
 		ui->lcdNumberHour  ->display(dt->time().hour());
@@ -505,7 +505,7 @@ void QSdrImpl::dialFreqChanged(int pos) {
 
 void QSdrImpl::setRxFreq(qint64 f) {
 	cur->rxFreq = f;
-	if (cur->rxFreq - cur->centerFreq > sampleRate/2) 
+	if (cur->rxFreq - cur->centerFreq > sampleRate/2)
 		setCenterFreq(f);
 	if (cur->rxFreq - cur->centerFreq < -sampleRate/2)
 		setCenterFreq(f);
@@ -534,7 +534,7 @@ void QSdrImpl::setTxFreq(qint64 f) {
 	trxMsg->set_txfreq(cur->txFreq);
 	txInHamRange = false;
 	for (int i=0;i<NBUTTON;i++) {
-		if (((sdrSettings->getIntVal(QString("Band,%1,min").arg(i+1))) <= f) && ((sdrSettings->getIntVal(QString("Band,%1,max").arg(i+1))) >= f)) 
+		if (((sdrSettings->getIntVal(QString("Band,%1,min").arg(i+1))) <= f) && ((sdrSettings->getIntVal(QString("Band,%1,max").arg(i+1))) >= f))
 			txInHamRange = true;
 	}
 }
@@ -579,7 +579,7 @@ void QSdrImpl::freqChanged(qint64 f) {
 }
 
 void QSdrImpl::setMode(int m) {
-	trxMsg->set_mode(m); 
+	trxMsg->set_mode(m);
 
 	cur->rxMode = m;
 	if (m == MODE_WFM_RDS) {
@@ -653,7 +653,7 @@ void QSdrImpl::setFilterLo(int v) {
 }
 
 void QSdrImpl::setFilterHi(int v) {
-	if (v > sampleRate/2) 
+	if (v > sampleRate/2)
 		v = sampleRate/2;
 	if (v <= cur->filterLo[cur->rxMode])
 		setFilterLo(v-10);
@@ -687,7 +687,7 @@ void QSdrImpl::setTXPower(int v, bool gui) {
 	txPower = v;
 	trxMsg->set_txpower(txPower*255/100);
 	ui->labelTXPower->setText(QString("%1").arg(v));
-	if (gui) 
+	if (gui)
 		ui->sliderTXPower->setValue(txPower);
 }
 
@@ -741,7 +741,7 @@ void QSdrImpl::setPreamp(int n) {
 }
 
 void QSdrImpl::keyPressEvent(QKeyEvent *event) {
-	int key = event->key(); 
+	int key = event->key();
 
 	switch (key) {
 		case Qt::Key_0 ... Qt::Key_9:
@@ -778,11 +778,11 @@ void QSdrImpl::keyPressEvent(QKeyEvent *event) {
 			setTX(tx, true);
 			break;
 
-		case Qt::Key_Minus: 
+		case Qt::Key_Minus:
 			freqChanged(cur->rxFreq - freqStep);
 			break;
 
-		case Qt::Key_Plus: 
+		case Qt::Key_Plus:
 			freqChanged(cur->rxFreq + freqStep);
 			break;
 
@@ -824,7 +824,7 @@ void QSdrImpl::keyPressEvent(QKeyEvent *event) {
 }
 
 void QSdrImpl::bandButtonPressed(int id) {
-	setMemory(id, true);	
+	setMemory(id, true);
 }
 
 void QSdrImpl::resizeEvent(QResizeEvent *event) {
@@ -852,7 +852,7 @@ void QSdrImpl::readSettings() {
 	MemSet *memset;
 
 	QSettings settings("sdr","qsdr");
-	
+
 	settings.beginGroup("Common");
 	rxSource    = (RxSrc)settings.value("rxSource", rxSource).toInt();
 	agcVal      = settings.value("agcVal",agcVal).toInt();
@@ -871,21 +871,21 @@ void QSdrImpl::readSettings() {
 	waterfallMin = settings.value("waterfallMin",waterfallMin).toInt();
 	waterfallMax = settings.value("waterfallMax",waterfallMax).toInt();
 
-	
+
 	settings.endGroup();
-	
+
 	settings.beginGroup("Layout");
-	if(settings.value("checkLayout").toInt()) { 
-	   restoreGeometry(settings.value("Geometry").toByteArray()); 
+	if(settings.value("checkLayout").toInt()) {
+	   restoreGeometry(settings.value("Geometry").toByteArray());
 	   ui->splitterDisp->restoreState(settings.value("SplitterDisp").toByteArray());
 	   ui->splitterFFT->restoreState(settings.value("SplitterFFT").toByteArray());
-	   ui->splitterSdr->restoreState(settings.value("SplitterSdr").toByteArray()); 
-	   resize(settings.value("Size",sizeHint()).toSize()); 
-	   restoreState(settings.value("Properties").toByteArray()); 
-	   
+	   ui->splitterSdr->restoreState(settings.value("SplitterSdr").toByteArray());
+	   resize(settings.value("Size",sizeHint()).toSize());
+	   restoreState(settings.value("Properties").toByteArray());
+
 	   // last slider->graphicView_Position ??      geht so nicht                         // hbd
 	   // last ui->dialFreq->setValue(); zeiger_position ? für centerFreq 0 oder 360 grad // hbd
-	   
+
 	}
 	settings.endGroup();
 
@@ -897,7 +897,7 @@ void QSdrImpl::readSettings() {
 	memset->centerFreq = settings.value("centerFreq",memset->centerFreq).toLongLong();
 	memset->preamp     = settings.value("preamp",memset->preamp).toInt();
 	memset->ant        = settings.value("ant",memset->ant).toInt();
-	
+
 	settings.beginReadArray("Filter");
 	for (int j=0;j<MODE_LAST-1;j++) {
 		settings.setArrayIndex(j);
@@ -907,7 +907,7 @@ void QSdrImpl::readSettings() {
 	}
 	settings.endArray();
 	settings.endGroup();
-	
+
 	settings.beginReadArray("Memory");
 	for (int i=0;i<MAX_MEM;i++) {
 		memset = &mem[i];
@@ -979,15 +979,15 @@ void QSdrImpl::writeSettings() {
 	settings.setValue("waterfallMax",waterfallMax);
 
 	settings.endGroup();
-	
+
 	settings.beginGroup("Layout");
-	settings.setValue("Geometry",saveGeometry()); 
+	settings.setValue("Geometry",saveGeometry());
 	settings.setValue("SplitterSdr",ui->splitterSdr->saveState());
-	settings.setValue("SplitterDisp",ui->splitterDisp->saveState()); 
-	settings.setValue("SplitterFFT",ui->splitterFFT->saveState()); 
+	settings.setValue("SplitterDisp",ui->splitterDisp->saveState());
+	settings.setValue("SplitterFFT",ui->splitterFFT->saveState());
 	settings.setValue("Size",size());
-	settings.setValue("Properties",saveState()); 
-	settings.setValue("checkLayout", 1); 
+	settings.setValue("Properties",saveState());
+	settings.setValue("checkLayout", 1);
 	settings.endGroup();
 
 	settings.beginGroup("Current");
@@ -1023,7 +1023,7 @@ void QSdrImpl::writeSettings() {
 		settings.setValue("centerFreq", memset->centerFreq);
 		settings.setValue("preamp", memset->preamp);
 		settings.setValue("ant", memset->ant);
-		
+
 		settings.beginWriteArray("Filter");
 		for (int j=0;j<MODE_LAST-1;j++) {
 			settings.setArrayIndex(j);
@@ -1047,7 +1047,7 @@ void QSdrImpl::writeSettings() {
 		settings.setValue("centerFreq", memset->centerFreq);
 		settings.setValue("preamp", memset->preamp);
 		settings.setValue("ant", memset->ant);
-		
+
 		settings.beginWriteArray("Filter");
 		for (int j=0;j<MODE_LAST-1;j++) {
 			settings.setArrayIndex(j);
@@ -1087,14 +1087,14 @@ void QSdrImpl::copyMem(MemSet *d,MemSet *s) {
 
 void QSdrImpl::setMemory(int n, bool band) {
 	if (store) {
-		if (band) 
+		if (band)
 			copyMem(&bandMem[n], &curMem);
 		else
 			copyMem(&mem[n], &curMem);
 		store = false;
 		ui->pushButtonSave->setChecked(store);
 	} else {
-		if (band) 
+		if (band)
 			copyMem(&curMem, &bandMem[n]);
 		else
 			copyMem(&curMem, &mem[n]);
@@ -1184,14 +1184,14 @@ void QSdrImpl::setAntenne(int ant, bool gui) {
 }
 
 void QSdrImpl::setFreqStep(int step) {
-	freqStep = step; 
+	freqStep = step;
 	filterGraph->setFreqStep(freqStep);
 	ui->comboBoxStep->insertItem(0,QString("%1").arg(step));
 	ui->comboBoxStep->setCurrentIndex(0);
 }
 
 void QSdrImpl::on_comboBoxStep_activated(QString s) {
-	freqStep = s.toInt(); 
+	freqStep = s.toInt();
 	filterGraph->setFreqStep(freqStep);
 }
 
@@ -1487,13 +1487,13 @@ void QSdrImpl::settingsChanged() {
 	this->setAutoFillBackground(true);
 	this->setPalette(p);
 
-	
+
 
 	fftGraph->settingsChanged();
 	filterGraph->settingsChanged();
 	fftGraph1->settingsChanged();
 	filterGraph1->settingsChanged();
-	
+
 	ui->comboBoxSampleRate->clear();
 	ui->comboBoxSampleRate->addItems(supportedSampleRate());
 	ui->comboBoxSampleRate->setCurrentIndex(ui->comboBoxSampleRate->findText(QString("%1").arg(sampleRate)));
@@ -1533,7 +1533,7 @@ void QSdrImpl::on_pushButtonMute_clicked(bool checked) {
 void QSdrImpl::sendTrxMsg() {
 	uint8 header[4];
 
-	if (!conn || trxMsg->ByteSize() == 0) 
+	if (!conn || trxMsg->ByteSize() == 0)
 		return;
 	std::ostringstream out;
 	trxMsg->SerializeToOstream(&out);
@@ -1559,7 +1559,7 @@ void QSdrImpl::setPlayFile(QString fileName) {
 		ui->comboBoxSampleRate->setCurrentIndex(ui->comboBoxSampleRate->findText(QString("%1").arg(sr)));
 		trxMsg->set_playfilename(fileName.toLatin1().data());
 		trxMsg->set_playfile(true);
-	} 
+	}
 }
 
 void QSdrImpl::playClosed() {

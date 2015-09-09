@@ -11,7 +11,7 @@ class TxSrc_message;
 typedef boost::shared_ptr<TxSrc_message> TxSrc_message_sptr;
 TxSrc_message_sptr make_txsrc_message(gr::msg_queue::sptr msgq);
 
-class TxSrc_message : public TxSrc 
+class TxSrc_message : public TxSrc
 {
 
 public:
@@ -25,7 +25,7 @@ private:
 	gr::vocoder::ulaw_decode_bs::sptr ulawDecoder;
 	gr::blocks::short_to_float::sptr short2float;
 	gr::blocks::file_sink::sptr fileSink;
-	gr_limit_ff_sptr limiter; 
+	gr_limit_ff_sptr limiter;
 
 };
 

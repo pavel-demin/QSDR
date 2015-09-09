@@ -10,7 +10,7 @@ class Rx_fm;
 typedef boost::shared_ptr<Rx_fm> Rx_fm_sptr;
 Rx_fm_sptr make_rx_fm(int sampleRate);
 
-class Rx_fm : public Rx 
+class Rx_fm : public Rx
 {
 
 public:

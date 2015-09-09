@@ -11,7 +11,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -129,7 +129,7 @@ unsigned char usbOpenDevice(usb_dev_handle **device, int vendor, const char *ven
           fprintf(stderr, "Warning: cannot query manufacturer for device: %s\n", usb_strerror());
         }else{
           errorCode = USB_ERROR_NOTFOUND;
-           //fprintf(stderr, "seen device from vendor ->%s<-\n", string); 
+           //fprintf(stderr, "seen device from vendor ->%s<-\n", string);
           if(strcmp(string, vendorName) == 0){
             len = usbGetStringAscii(handle, dev->descriptor.iProduct, 0x0409, string, sizeof(string));
             if(len < 0){
@@ -137,7 +137,7 @@ unsigned char usbOpenDevice(usb_dev_handle **device, int vendor, const char *ven
               fprintf(stderr, "Warning: cannot query product for device: %s\n", usb_strerror());
             }else{
               errorCode = USB_ERROR_NOTFOUND;
-               //fprintf(stderr, "seen product ->%s<-\n", string); 
+               //fprintf(stderr, "seen product ->%s<-\n", string);
               if(strcmp(string, productName) == 0) {
 		len = usbGetStringAscii(handle, dev->descriptor.iSerialNumber, 0x0409, serialNumberString, sizeof(serialNumberString));
 		if (len < 0) {
@@ -185,7 +185,7 @@ double calculateFrequency(unsigned char * buffer) {
 	int N1 = ((buffer[1] & 0xc0 ) >> 6) + ((buffer[0] & 0x1f) * 4);
 	int HS_DIV = (buffer[0] & 0xE0) >> 5;
 	double fout = fXtall * RFREQ / ((N1 + 1) * HS_DIV_MAP[HS_DIV]);
-	
+
 	if (verbose >= 2) {
 	   printf("RFREQ = %f\n", RFREQ);
 	   printf("N1 = %d\n", N1);
@@ -216,11 +216,11 @@ unsigned short readVersion(usb_dev_handle *handle) {
 double readFrequencyByValue(usb_dev_handle *handle) {
 	unsigned int iFreq;
 	int nBytes;
-    
+
 	nBytes = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, REQUEST_READ_FREQUENCY, 0, 0, (char *) &iFreq, sizeof(iFreq), 500);
 
 	if (nBytes == 4) {
-		double dFreq;		
+		double dFreq;
         	dFreq = (double)iFreq / (1UL<<21);
 		return dFreq;
 	}
@@ -293,21 +293,21 @@ void setPTT(usb_dev_handle *handle, int value) {
 	buffer[0] = 0;
 	buffer[1] = 0;
 	buffer[2] = 0;
-	
+
 	usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, REQUEST_SET_PTT, value, 0, (char *)buffer, sizeof(buffer), 5000);
 }
 
 int calcDividers(double f, struct solution* solution)
 {
-	struct solution sols[8]; 
+	struct solution sols[8];
 	int i;
 	double y;
 	int imin;
 	double fmin;
-	
+
 	// Count down through the dividers
 	for (i=7;i >= 0;i--) {
-		
+
 		if (HS_DIV_MAP[i] > 0) {
 			sols[i].HS_DIV = i;
 			y = (SI570_DCO_HIGH + SI570_DCO_LOW) / (2 * f);
@@ -328,7 +328,7 @@ int calcDividers(double f, struct solution* solution)
 	}
 	imin = -1;
 	fmin = 10000000000000000.0;
-		
+
 	for (i=0; i < 8; i++) {
 		if ((sols[i].f0 >= SI570_DCO_LOW) && (sols[i].f0 <= SI570_DCO_HIGH)) {
 			if (sols[i].f0 < fmin) {
@@ -337,7 +337,7 @@ int calcDividers(double f, struct solution* solution)
 			}
 		}
 	}
-		
+
 	if (imin >=0) {
 		solution->HS_DIV = sols[imin].HS_DIV;
 		solution->N1 = sols[imin].N1;
@@ -349,7 +349,7 @@ int calcDividers(double f, struct solution* solution)
 			printf("solution->N1 = %d\n", solution->N1);
 			printf("solution->f0 = %f\n", solution->f0);
 			printf("solution->RFREQ = %f\n", solution->RFREQ);
-		}	
+		}
 
 		return 1;
 	} else {
@@ -363,11 +363,11 @@ void setLongWord( int value, char * bytes)
 	bytes[1] = ((value & 0xff00) >> 8) & 0xff;
 	bytes[2] = ((value & 0xff0000) >> 16) & 0xff;
 	bytes[3] = ((value & 0xff000000) >> 24) & 0xff;
-} 
+}
 
 void setFrequency(usb_dev_handle * handle, double frequency)
 {
-	
+
 	char buffer[6];
 	int request = REQUEST_SET_FREQ;
 	int value = 0x700 + i2cAddress;
@@ -375,17 +375,17 @@ void setFrequency(usb_dev_handle * handle, double frequency)
 	double f = frequency * multiplier;
 	if (verbose)
 		printf("Setting Si570 Frequency by registers to: %f\n", f);
-	
+
 	struct solution theSolution;
-	calcDividers(f, &theSolution); 
-	
+	calcDividers(f, &theSolution);
+
 	int RFREQ_int = trunc(theSolution.RFREQ);
 	int RFREQ_frac = round((theSolution.RFREQ - RFREQ_int)*268435456);
 	unsigned char fracBuffer[4];
 	unsigned char intBuffer[4];
 	setLongWord(RFREQ_int, (char *) intBuffer);
 	setLongWord(RFREQ_frac, (char *) fracBuffer);
-	
+
 	buffer[5] = fracBuffer[0];
 	buffer[4] = fracBuffer[1];
 	buffer[3] = fracBuffer[2];
@@ -395,24 +395,24 @@ void setFrequency(usb_dev_handle * handle, double frequency)
 	buffer[1] = buffer[1] + ((theSolution.N1 & 3) << 6);
 	buffer[0] = theSolution.N1 / 4;
 	buffer[0] = buffer[0] + (theSolution.HS_DIV << 5);
-	
+
 	if (usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_OUT, request, value, index, buffer, sizeof(buffer), 5000)) {
 		if (verbose >= 2) printBuffer(buffer, 2);
-		
+
 	} else {
 		fprintf(stderr, "Failed writing frequency to device\n");
 	}
 }
 
 void setFreqByValue(usb_dev_handle * handle, double frequency)
-{	
+{
 	char buffer[4];
 	int request = REQUEST_SET_FREQ_BY_VALUE;
 	int value = 0x700 + i2cAddress;
 	int index = 0;
-	
+
 	double f = multiplier * frequency;
-    
+
 	setLongWord(round(f * 2097152.0), buffer);
 	if (verbose) {
 		printf("Setting Si570 Frequency by value to: %f\n", f);
@@ -422,7 +422,7 @@ void setFreqByValue(usb_dev_handle * handle, double frequency)
 
 	if (usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_OUT, request, value, index, buffer, sizeof(buffer), 5000)) {
 		if (verbose >= 2) printBuffer(buffer, 2);
-		
+
 	} else {
 		fprintf(stderr, "Failed setting frequency");
 	}

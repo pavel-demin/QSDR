@@ -7,7 +7,7 @@ Device
   freqCorr	int,0,-10000,10000
  AudioDev
   Gnuradio	enum,0,[AUDIODEV]
-  GUI 
+  GUI
    Input	enum,0,[QTAUDIODEVIN]
    Output	enum,0,[QTAUDIODEVOUT]
 
@@ -48,10 +48,10 @@ Trx
    fMin		int,300,1,9999999
    fMax		int,3000,1,9999999
   TwoToneTest
-   1 
+   1
     freq	int,800,1,20000
     ampl	double,0.2,0,2
-   2 
+   2
     freq	int,1000,1,20000
     ampl	double,0.2,0,2
   Equalizer

@@ -10,7 +10,7 @@ class Rx_raw;
 typedef boost::shared_ptr<Rx_raw> Rx_raw_sptr;
 Rx_raw_sptr make_rx_raw(int sampleRate);
 
-class Rx_raw : public Rx 
+class Rx_raw : public Rx
 {
 
 public:

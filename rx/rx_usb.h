@@ -10,7 +10,7 @@ class Rx_usb;
 typedef boost::shared_ptr<Rx_usb> Rx_usb_sptr;
 Rx_usb_sptr make_rx_usb(int sampleRate);
 
-class Rx_usb : public Rx 
+class Rx_usb : public Rx
 {
 
 public:
@@ -30,7 +30,7 @@ private:
 	gr::filter::freq_xlating_fir_filter_ccc::sptr filter_c;
 	gr::filter::freq_xlating_fir_filter_ccf::sptr filter_if;
 	gr::analog::probe_avg_mag_sqrd_c::sptr smeter;
-	gr::filter::fir_filter_ccf::sptr firFilter_ccf; 
+	gr::filter::fir_filter_ccf::sptr firFilter_ccf;
 	gr::filter::firdes *firdes;
 	gr::blocks::add_ff::sptr adder;
 	gr::blocks::complex_to_float::sptr c2f;

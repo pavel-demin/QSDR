@@ -22,7 +22,7 @@ public:
     bool removeColumns(int position, int columns);
     int childNumber() const;
     bool setData(int column, const QVariant &value);
-	
+
 
 private:
     QList<TreeItem*> childItems;

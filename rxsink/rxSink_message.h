@@ -29,5 +29,5 @@ private:
 	gr::blocks::null_sink::sptr nullSink;
 };
 
-#endif 
+#endif
 
