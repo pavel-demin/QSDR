@@ -8,7 +8,7 @@ RCC_DIR = build
 FORMS += qsdr.ui play.ui
 RESOURCES = qsdr.qrc
 
-SOURCES += main.cpp trx.cpp qsdrimpl.cpp fftGraph.cpp filterGraph.cpp  audioGraph.cpp
+SOURCES += main.cpp trx.cpp qsdrimpl.cpp fftGraph.cpp filterGraph.cpp audioGraph.cpp
 SOURCES += smeter.cpp settings.cpp delegate.cpp treemodel.cpp treeitem.cpp play.cpp
 
 SOURCES += rx/rx.cpp rx/rx_usb.cpp rx/rx_lsb.cpp rx/rx_cw.cpp rx/rx_am.cpp rx/rx_fm.cpp rx/rx_null.cpp
@@ -25,15 +25,13 @@ SOURCES += txsrc/txSrc_null.cpp txsrc/txSrc_message.cpp
 
 SOURCES += rxsink/rxSink.cpp rxsink/rxSink_speaker.cpp rxsink/rxSink_message.cpp
 
-SOURCES += hiqsdr/sink_impl.cc hiqsdr/source_impl.cc
-
 SOURCES += gr/gr_sdr_sink.cc gr/gr_psk31_decoder.cc
 SOURCES += gr/gr_reader_i.cc gr/gr_limit_ff.cc
 SOURCES += gr_rds/gr_rds_bpsk_demod.cc gr_rds/gr_rds_data_decoder.cc gr_rds/gr_rds_data_encoder.cc gr_rds/gr_rds_freq_divider.cc gr_rds/gr_rds_rate_enforcer.cc
 SOURCES += gr/gr_sdrfile_source.cc gr/gr_sdrfile_sink.cc
 
 SOURCES += lib.cpp trx.pb.cc
-SOURCES += g7xx/g711.c  g7xx/g721.c  g7xx/g723_24.c  g7xx/g723_40.c  g7xx/g72x.c
+SOURCES += g7xx/g711.c g7xx/g721.c g7xx/g723_24.c g7xx/g723_40.c g7xx/g72x.c
 
 SOURCES += crypt/sha256.c crypt/crypt.cpp
 
@@ -48,9 +46,7 @@ LIBS += -lgnuradio-uhd -luhd
 DEFINES += USRP
 
 SOURCES += trxdev/trxDev_hiqsdr.cpp
-INCLUDEPATH += gr-hiqsdr
-SOURCES += gr-hiqsdr/gr_hiqsdr_sink.cc
-SOURCES += gr-hiqsdr/gr_hiqsdr_source.cc
+SOURCES += hiqsdr/sink_impl.cc hiqsdr/source_impl.cc
 
 SOURCES += trxdev/trxDev_redpitrcv.cpp
 SOURCES += redpitaya/rcv_source_impl.cc redpitaya/trx_source_impl.cc redpitaya/trx_sink_impl.cc
