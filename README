@@ -2,4 +2,23 @@ This is a modification of the Software Defined Radio program by Stefan Goerg.
 
 The original sources can be found at:
 
-http://dl2stg.de/stefan/hiqsdr/qsdr.html
+  http://dl2stg.de/stefan/hiqsdr/qsdr.html
+
+Installing dependencies (tested with Debian 8 (amd64) and Ubuntu 14.04 (amd64)):
+
+  sudo apt-get install libqt5designer5 libqt5multimedia5-plugins \
+    qtbase5-dev qtmultimedia5-dev qttools5-dev libboost-system-dev \
+    libfftw3-dev liblog4cpp5-dev libprotobuf-dev protobuf-compiler \
+    libasound2-dev libxml2-dev gnuradio-dev libuhd-dev gr-osmosdr
+
+Cloning the source code repository:
+
+  git clone https://github.com/pavel-demin/QSDR
+  cd QSDR
+
+Building the program (tested with Debian 8 (amd64) and Ubuntu 14.04 (amd64)):
+
+  protoc --cpp_out=. trx.proto
+  /usr/lib/x86_64-linux-gnu/qt5/bin/qmake
+  make
+
