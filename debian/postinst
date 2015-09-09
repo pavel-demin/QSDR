@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -e
+
+case "${1}" in
+	configure)
+		if which update-icon-caches >/dev/null 2>&1 ; then
+        		update-icon-caches /usr/share/icons/qsdr.png
+		fi
+		ldconfig
+		;;
+
+	abort-upgrade|abort-remove|abort-deconfigure)
+
+		;;
+
+	*)
+		echo "postinst called with unknown argument \`${1}'" >&2
+		exit 1
+		;;
+esac
+
+
+
+exit 0

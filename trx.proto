@@ -1,0 +1,48 @@
+package TrxProto;
+
+message TrxMessage {
+	optional bytes audio 			= 1;
+	optional uint32 vfo 			= 2;
+	optional bool vfoActiv 			= 3;
+	optional uint64 rxCenterFreq 	= 4; 
+	optional uint64 rxFreq 			= 5; 
+	optional uint32 agc 			= 6; 
+	optional uint32 antenne 		= 7; 
+	optional uint32 fftSize 		= 8;
+	optional uint32 filterLo 		= 9;
+	optional uint32 filterHi 		= 10;
+	optional uint32 filterCut 		= 11;
+	optional uint32 filterNotchBW 	= 12;
+	optional uint32 filterNotchFreq 	= 13;
+	optional bool notchActiv		= 14;
+	optional int32 preAmp			= 15;
+	optional uint32 mode			= 16;
+	optional uint32 sampleRate		= 17;
+	optional int32 squelchLevel		= 18;
+	optional uint64 txFreq			= 19;
+	optional uint32 txPower			= 20;
+	optional uint32 presel			= 21;
+	optional uint32 gain			= 22;
+	optional bool ptt				= 23;
+	optional bytes settings			= 25;
+	optional string playFileName	= 26;
+	optional string recordFileName	= 27;
+	optional bool playFile			= 28;
+	optional bool recordFile		= 29;
+	optional bool keepAlive			= 30;
+	optional bool readRaw			= 31;
+	optional bool getFileList		= 32;
+	optional uint32 filepos			= 33;
+}
+
+message GuiMessage {
+	optional bytes audio 			= 1;
+	optional float rssi				= 2;
+	optional bytes fft				= 3;
+	optional bytes displayText		= 4;
+	optional bool restartInd		= 5;
+	optional bytes key				= 6;
+	repeated string files			= 7;
+	optional uint64 playFileLen		= 8;
+	optional uint64 playFilePos		= 9;
+}

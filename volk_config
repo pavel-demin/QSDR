@@ -1,0 +1,4 @@
+volk_32fc_x2_multiply_32fc_a sse2
+volk_32fc_x2_multiply_32fc_u sse2
+volk_32f_s32f_multiply_32f_a sse2
+volk_32fc_deinterleave_32f_x2_a sse2

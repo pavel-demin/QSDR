@@ -1,0 +1,11 @@
+Package: qsdr
+Version: 1.0.0
+Architecture: i386 
+Maintainer: Stefan  <sg@dl2stg.de>
+Installed-Size: 1220 
+Depends: libc6 (>= 2.3), libqtgui4 (>= 4.4.3), libqtcore4, libqt4-xml, libqt4-network, libfftw3-dev, libxml2, gnuradio, libprotobuf7, pulseaudio, pavucontrol, libqtmultimediakit1
+Conflicts:
+Section: apps
+Priority: optional
+Homepage: 
+Description: QSDR, a experimental SDR-Transceiver 

@@ -1,0 +1,208 @@
+Device
+ Device		enum,0,HiQSDR,USRP,OSMO-SDR,NULL,Testsignal
+ HiQSDR
+  IP	string,192.168.2.196
+  freqCorr	int,0,-10000,10000
+ OSMOSDR
+  freqCorr	int,0,-10000,10000
+ AudioDev
+  Gnuradio	enum,0,[AUDIODEV]
+  GUI 
+   Input	enum,0,[QTAUDIODEVIN]
+   Output	enum,0,[QTAUDIODEVOUT]
+
+Config
+ SMeterCal	double,-2.0,-100,100
+ CWTone		int,600,0,2000
+
+Time
+ Zone	enum,1,UTC,Local
+
+Trx
+ RX
+  Sink	enum,1,LocalAudio,IP
+  NotchFilterBandwidth	int,250,10,2000
+  dcFilter	bool,on
+  limiter	double,0.7,0.0,1.0
+  agc_fast
+   attack_rate	double,1,0,100
+   decay_rate	double,1,0,100
+   reference	double,0.1,0,100
+  agc_slow
+   attack_rate	double,1,0,100
+   decay_rate	double,0.1,0,100
+   reference	double,0.1,0,100
+ TX
+  Source	enum,1,LocalAudio,IP,2ToneTest
+  monitor	enum,0,Direct,RX
+  mute	bool,on
+  sampleRate	int,48000,48000,960000
+  agc
+   activ	bool,off
+   attack_rate	double,1,0,100
+   decay_rate	double,0.1,0,100
+   reference	double,0.5,0,100
+  gain	double,1,0.0,100.0
+  limiter	double,0.7,0.0,1.0
+  SSB
+   fMin		int,300,1,9999999
+   fMax		int,3000,1,9999999
+  TwoToneTest
+   1 
+    freq	int,800,1,20000
+    ampl	double,0.2,0,2
+   2 
+    freq	int,1000,1,20000
+    ampl	double,0.2,0,2
+  Equalizer
+   Enable		bool,off
+   Low
+    freq		int,300,1,3000
+    val		double,1,0.0,3.0
+   Mid
+    freq		int,800,1,3000
+    val		double,1,0.0,3.0
+   High
+    freq		int,2000,1,3000
+    maxfreq	int,3000,1,3000
+    val		double,1,0.0,3.0
+
+Display
+ fftRate_ms			int,50,20,999999
+ Spectrum
+  averageTimeMax	int,64,1,9999999
+  averageTime		int,16,1,9999999
+  scale				int,2,1,10
+  offset			double,3,-100,100
+ Color
+  App
+   Win				color,#001d1d
+   WindowText		color,#00ffff
+   Base				color,#000000
+   AlternateBase	color,#848484
+   Text				color,#ffffff
+   Button			color,#5673aa
+   ButtonInactiv	color,#002866
+   ButtonText		color,#ffffff
+   BrightText		color,#0fffff
+  shadow	int,70,0,255
+  Spectrum
+   average	color,#09f088
+   maximum	color,#d11346
+   grid		color,#5a5a5a
+   freq		color,#f0f0f0
+   background	color,#000000
+  Waterfall
+   mode		enum,1,bw,color,hsv
+   h_min	double,1,0,10
+   h_max	double,0,0,10
+   s_min	double,1,0,10
+   s_max	double,1,0,10
+   v_min	double,0,0,10
+   v_max	double,1,0,10
+
+Interconnect
+ AudioBufferSize	int,2000,0,100000
+
+Band
+ BandButtons	int,10,2,20
+ 1
+  name	string,160m
+  min	int, 1810000, 0, 66000000
+  max	int, 2000000, 0, 66000000
+  presel	int,1,0,15
+ 2
+  name	string,80m
+  min	int, 3500000, 0, 66000000
+  max	int, 3800000, 0, 66000000
+  presel	int,2,0,15
+ 3
+  name	string,40m
+  min	int, 7000000, 0, 66000000
+  max	int, 7200000, 0, 66000000
+  presel	int,3,0,15
+ 4
+  name	string,30m
+  min	int, 10100000, 0, 66000000
+  max	int, 10150000, 0, 66000000
+  presel	int,4,0,15
+ 5
+  name	string,20m
+  min	int, 14000000, 0, 66000000
+  max	int, 14350000, 0, 66000000
+  presel	int,5,0,15
+ 6
+  name	string,17m
+  min	int, 18068000, 0, 66000000
+  max	int, 18168000, 0, 66000000
+  presel	int,6,0,15
+ 7
+  name	string,15m
+  min	int, 21000000, 0, 66000000
+  max	int, 21450000, 0, 66000000
+  presel	int,7,0,15
+ 8
+  name	string,12m
+  min	int, 24890000, 0, 66000000
+  max	int, 24990000, 0, 66000000
+  presel	int,8,0,15
+ 9
+  name	string,10m
+  min	int, 28000000, 0, 66000000
+  max	int, 29700000, 0, 66000000
+  presel	int,9,0,15
+ 10
+  name	string,6m
+  min	int, 50080000, 0, 66000000
+  max	int, 51000000, 0, 66000000
+  presel	int,10,0,15
+ 11
+  name	string,LF
+  min	int, 135700, 0, 66000000
+  max	int, 137800, 0, 66000000
+  presel	int,0,0,15
+ 12
+  name	string,MW
+  min	int, 526500, 0, 66000000
+  max	int, 1606500, 0, 66000000
+  presel	int,0,0,15
+ 13
+  name	string,unused
+  min	int, 10000000, 0, 66000000
+  max	int, 20000000, 0, 66000000
+  presel	int,0,0,15
+ 14
+  name	string,unused
+  min	int, 10000000, 0, 66000000
+  max	int, 20000000, 0, 66000000
+  presel	int,0,0,15
+ 15
+  name	string,unused
+  min	int, 10000000, 0, 66000000
+  max	int, 20000000, 0, 66000000
+  presel	int,0,0,15
+ 16
+  name	string,unused
+  min	int, 10000000, 0, 66000000
+  max	int, 20000000, 0, 66000000
+  presel	int,0,0,15
+ 17
+  name	string,unused
+  min	int, 10000000, 0, 66000000
+  max	int, 20000000, 0, 66000000
+  presel	int,0,0,15
+ 18
+  name	string,unused
+  min	int, 10000000, 0, 66000000
+  max	int, 20000000, 0, 66000000
+  presel	int,0,0,15
+ 19
+  name	string,unused
+  min	int, 10000000, 0, 66000000
+  max	int, 20000000, 0, 66000000
+  presel	int,0,0,15
+ 20
+  name	string,unused
+  min	int, 10000000, 0, 66000000
+  max	int, 20000000, 0, 66000000
+  presel	int,0,0,15

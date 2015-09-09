@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=QSdr
+Comment=SDR Gui for HiQSDR
+Exec=qsdr
+Terminal=false
+Type=Application
+Icon=qsdr.png
+Categories=Utility;Database;HamRadio
+

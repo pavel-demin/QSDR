@@ -1,0 +1,22 @@
+#!/bin/sh
+rm -rf deb
+mkdir -p deb/DEBIAN/
+cp  postinst prerm  deb/DEBIAN
+cp  control64 deb/DEBIAN/control
+mkdir -p deb/usr/bin/
+mkdir -p deb/usr/share/qsdr
+mkdir -p deb/usr/share/icons
+mkdir -p deb/usr/share/applications
+mkdir -p deb/usr/share/pixmaps
+mkdir -p deb/usr/share/pixmaps
+mkdir -p deb/usr/lib
+cp  ../qsdr deb/usr/bin/qsdr 
+cp ../qsdr.png deb/usr/share/icons/qsdr.png
+cp ../qsdr.png deb/usr/share/pixmaps/qsdr.png
+cp ../qsdr.desktop deb/usr/share/applications/qsdr.desktop
+#cp /usr/local/lib/libgnuradio-hiqsdr.so deb/usr/lib
+#cp /usr/local/lib/libgnuradio-osmosdr.so deb/usr/lib
+#cp /usr/local/lib/librtlsdr.so.0 deb/usr/lib
+find deb/ -name ".svn" -exec rm -rf {} \;
+dpkg-deb -b deb qsdr.deb 
+

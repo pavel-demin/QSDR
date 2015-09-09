@@ -1,0 +1,21 @@
+0.9.9b1
+
+gnuradio-core/src/lib/runtime/gr_flat_flowgraph.cc
+- Internal structure redesigned
+- New concept for settings
+- second rx
+- OSMSDR supported
+- WFM-stereo support with RDS 
+- IQ-output to Soundcard
+- Gnuradio 3.6.x
+- Preselector support
+- new RX-Samplerates up to 1920000 (16Bit) and 3860000 (8Bit) 
+
+0.9.5
+
+- new: Spectrum with full range (only with FPGA-Modification)
+- Band buttons
+- same more settings will be saved (thanks to Dieter, DL1HBD)
+- some colors configurable
+
+
