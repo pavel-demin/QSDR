@@ -1,15 +1,22 @@
 Device
- Device		enum,0,HiQSDR,USRP,OSMO-SDR,NULL,Testsignal
+ Device		enum,0,HiQSDR,USRP,OSMO-SDR,NULL,Testsignal,RedPitayaRcv,RedPitayaRtx
  HiQSDR
   IP	string,192.168.2.196
   freqCorr	int,0,-10000,10000
  OSMOSDR
+  arg	string,osmosdr=0
+  freqCorr	int,0,-10000,10000
+ RedPitaya
+  IP	string,192.168.1.100
+  rxport	int,1001,1,32768
+  txport	int,1002,1,32768
   freqCorr	int,0,-10000,10000
  AudioDev
   Gnuradio	enum,0,[AUDIODEV]
   GUI
    Input	enum,0,[QTAUDIODEVIN]
    Output	enum,0,[QTAUDIODEVOUT]
+ FreqShift	int,0,-1000000,+1000000
 
 Config
  SMeterCal	double,-2.0,-100,100
@@ -36,7 +43,7 @@ Trx
   Source	enum,1,LocalAudio,IP,2ToneTest
   monitor	enum,0,Direct,RX
   mute	bool,on
-  sampleRate	int,48000,48000,960000
+  sampleRate	int,48000,20000,960000
   agc
    activ	bool,off
    attack_rate	double,1,0,100

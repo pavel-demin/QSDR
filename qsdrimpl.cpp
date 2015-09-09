@@ -1384,8 +1384,10 @@ bool QSdrImpl::isTx() {
 		case SRC_HIQSDR:
 		case SRC_USRP:
 		case SRC_TESTSIGNAL:
+		case SRC_REDPITTRX:
 			return true;
 		case SRC_OSMOSDR:
+		case SRC_REDPITRCV:
 		case SRC_NULL:
 		case SRC_FILE:
 			return false;
@@ -1429,6 +1431,15 @@ QStringList QSdrImpl::supportedSampleRate() {
 			list << "1920000";
 			list << "2400000";
 			list << "2880000";
+			list << "1024000";
+			list << "2048000";
+			break;
+		case SRC_REDPITRCV:
+		case SRC_REDPITTRX:
+			list << "50000";
+			list << "100000";
+			list << "250000";
+			list << "500000";
 			break;
 		case SRC_NULL:
 		case SRC_TESTSIGNAL:

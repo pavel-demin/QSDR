@@ -142,7 +142,12 @@ class Trx : public QObject  {
 		bool send;
 		bool txAGC;
 		double txAGCAtt,txAGCDec,txAGCRef;
+		int freqshift;
 		char hiqip[256];
+		char redip[256];
+		int redrxport;
+		int redtxport;
+		char osmoarg[256];
 		char audioDevSpeakerMic[256];
 		double fftSize;
 		float hiqsdrDC;
@@ -164,6 +169,7 @@ class Trx : public QObject  {
 		int gain;
 		int osmoFreqCorr;
 		int hiqsdrFreqCorr;
+		int redFreqCorr;
 		bool dcFilter;
 		bool txMute;
 		double smtrCal;

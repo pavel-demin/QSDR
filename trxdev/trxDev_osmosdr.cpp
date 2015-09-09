@@ -1,15 +1,15 @@
 #include <gnuradio/io_signature.h>
 #include "trxDev_osmosdr.h"
 
-TrxDev_osmosdr_sptr make_trxdev_osmosdr(int sampleRate, int freqCorr) {
-	return gnuradio::get_initial_sptr(new TrxDev_osmosdr(sampleRate, freqCorr));
+TrxDev_osmosdr_sptr make_trxdev_osmosdr(char *arg, int sampleRate, int freqCorr) {
+	return gnuradio::get_initial_sptr(new TrxDev_osmosdr(arg, sampleRate, freqCorr));
 }
 
-TrxDev_osmosdr::TrxDev_osmosdr(int sRate, int freqCorr) : TrxDev("OSMOSDR") {
+TrxDev_osmosdr::TrxDev_osmosdr(char *arg, int sRate, int freqCorr) : TrxDev("OSMOSDR") {
 	qDebug() << "IN OSMO";
 	sampleRate = sRate;
 
-	osmoSdrSource = osmosdr::source::make();
+	osmoSdrSource = osmosdr::source::make(arg);
 	nullSink = gr::blocks::null_sink::make (sizeof(gr_complex));
 	multi = gr::blocks::multiply_const_cc::make (1/256.0);
 

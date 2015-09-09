@@ -38,6 +38,7 @@
 #include "trxDev_file.h"
 #include "trxDev_null.h"
 #include "trxDev_testsignal.h"
+#include "trxDev_redpitrcv.h"
 
 #include "crypt.h"
 #include "lib.h"
@@ -94,6 +95,8 @@ Trx::Trx(int port, char *key)  {
 	nullSource = gr::blocks::null_source::make (sizeof(gr_complex));
 
 	strcpy(hiqip, "192.168.2.196");
+	strcpy(redip, "192.168.1.100");
+	strcpy(osmoarg, "osmosdr=0");
 	strcpy(audioDevSpeakerMic, "default");
 
 	txAGCDec = 0.1;
@@ -120,6 +123,7 @@ Trx::Trx(int port, char *key)  {
 	gain = 20;
 	twoToneTest = false;
 	record = false;
+	freqshift = 0;
 
 	txSampleRate = 48000;
 
@@ -142,6 +146,9 @@ Trx::Trx(int port, char *key)  {
 	recordTX = false;
 	hiqsdrFreqCorr = 0;
 	osmoFreqCorr = 0;
+	redFreqCorr = 0;
+	redrxport = 1001;
+	redtxport = 1002;
 	dcFilter = true;
 	txMute = true;
 	smtrCal = 0;
@@ -270,7 +277,7 @@ void Trx::setTxFreq(qint64 f) {
 void Trx::setCenterFreq(qint64 f) {
 	PDEBUG(MSG1, "TRX: center:%lli",f);
 	centerFreq = f;
-	trxDev->setCenterFreq(centerFreq);
+	trxDev->setCenterFreq(centerFreq - freqshift * 1000);
 }
 
 void Trx::setGain(int v) {
@@ -403,7 +410,7 @@ void Trx::setMode(int m) {
 void Trx::restoreRX() {
 	PDEBUG(MSG2, "TRX: restore rx");
 	stop();
-	trxDev->setCenterFreq(centerFreq);
+	trxDev->setCenterFreq(centerFreq - freqshift * 1000);
 	rx[vfo]->setFreq(rxFreq - centerFreq);
 	rx[vfo]->setFilter(filterLo, filterHi, filterCut);
 	rx[vfo]->setNotch(notchOn);
@@ -557,7 +564,7 @@ void Trx::setTRXDev(RxSrc src) {
 			break;
 #ifdef OSMOSDR
 		case SRC_OSMOSDR:
-			trxDev = make_trxdev_osmosdr(sampleRate, osmoFreqCorr );
+			trxDev = make_trxdev_osmosdr(osmoarg, sampleRate, osmoFreqCorr );
 			break;
 #endif
 #ifdef USRP
@@ -567,6 +574,12 @@ void Trx::setTRXDev(RxSrc src) {
 #endif
 		case SRC_TESTSIGNAL:
 			trxDev = make_trxdev_testsignal(sampleRate);
+			break;
+		case SRC_REDPITRCV:
+			trxDev = make_trxdev_redpitrcv(sampleRate, redip, redrxport);
+			break;
+		case SRC_REDPITTRX:
+			trxDev = make_trxdev_redpittrx(sampleRate, redip, redrxport, redtxport);
 			break;
 		default:
 			trxDev = make_trxdev_null(sampleRate);
@@ -782,13 +795,26 @@ void Trx::settingsChanged(QString settings) {
 		if (st ==  "Device,OSMOSDR,freqCorr") {
 			osmoFreqCorr = val.toInt();
 			if (rxSource == SRC_OSMOSDR)
-				trxDev->setFreqCorr(hiqsdrFreqCorr);
+				trxDev->setFreqCorr(osmoFreqCorr);
+		}
+		if (st == "Device,OSMOSDR,arg") {
+			if (QString(osmoarg) != val && rxSource == SRC_OSMOSDR) {
+				strcpy(osmoarg,val.toLatin1().data());
+				setTRXDev(SRC_NULL);
+				setTRXDev(SRC_OSMOSDR);
+			}
 		}
 		if (st ==  "Device,HiQSDR,freqCorr") {
 			hiqsdrFreqCorr = val.toInt();
 			if (rxSource == SRC_HIQSDR)
 				trxDev->setFreqCorr(hiqsdrFreqCorr);
-		qDebug() << "freqCorr" << hiqsdrFreqCorr;
+			qDebug() << "freqCorr" << hiqsdrFreqCorr;
+		}
+		if (st ==  "Device,RedPitayaRcv,freqCorr") {
+			redFreqCorr = val.toInt();
+			if (rxSource == SRC_REDPITRCV)
+				trxDev->setFreqCorr(redFreqCorr);
+			qDebug() << "redfreqCorr" << redFreqCorr;
 		}
 
 		if (st == "Trx,RX,dcFilter") dcFilter = (val == "on");
@@ -801,6 +827,49 @@ void Trx::settingsChanged(QString settings) {
 				strcpy(hiqip,val.toLatin1().data());
 				setTRXDev(SRC_NULL);
 				setTRXDev(rxSource);
+			}
+		}
+		if (st == "Device,RedPitaya,IP") {
+			if (QString(redip) != val && rxSource == SRC_REDPITRCV) {
+				strcpy(redip,val.toLatin1().data());
+				setTRXDev(SRC_NULL);
+				setTRXDev(SRC_REDPITRCV);
+			}
+			if (QString(redip) != val && rxSource == SRC_REDPITTRX) {
+				strcpy(redip,val.toLatin1().data());
+				setTRXDev(SRC_NULL);
+				setTRXDev(SRC_REDPITTRX);
+			}
+		}
+		if (st ==  "Device,RedPitaya,rxport") {
+			int newport=val.toInt();
+			if (newport != redrxport) {
+				redrxport=newport;
+				if (rxSource == SRC_REDPITRCV) {
+					setTRXDev(SRC_NULL);
+					setTRXDev(SRC_REDPITRCV);
+				}
+				if (rxSource == SRC_REDPITTRX) {
+					setTRXDev(SRC_NULL);
+					setTRXDev(SRC_REDPITTRX);
+				}
+			}
+		}
+		if (st ==  "Device,RedPitaya,txport") {
+			int newport=val.toInt();
+			if (newport != redtxport) {
+				redtxport=newport;
+				if (rxSource == SRC_REDPITTRX) {
+					setTRXDev(SRC_NULL);
+					setTRXDev(SRC_REDPITTRX);
+				}
+			}
+		}
+		if (st == "Device,FreqShift") {
+			int newshift=val.toInt();
+			if (newshift != freqshift) {
+				freqshift=newshift;
+				setCenterFreq(centerFreq);
 			}
 		}
 

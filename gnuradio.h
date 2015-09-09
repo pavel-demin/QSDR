@@ -55,7 +55,9 @@
 #include <gnuradio/filter/freq_xlating_fir_filter_ccf.h>
 #include <gnuradio/filter/freq_xlating_fir_filter_fcf.h>
 #include <gnuradio/filter/rational_resampler_base_ccf.h>
+#include <gnuradio/filter/rational_resampler_base_ccc.h>
 #include <gnuradio/filter/rational_resampler_base_fff.h>
+#include <gnuradio/filter/fractional_resampler_cc.h>
 #include <gnuradio/top_block.h>
 #include <gnuradio/vocoder/alaw_decode_bs.h>
 #include <gnuradio/vocoder/alaw_encode_sb.h>

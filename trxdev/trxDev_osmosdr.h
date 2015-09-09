@@ -11,13 +11,13 @@ class TrxDev_osmosdr;
 
 typedef boost::shared_ptr<TrxDev_osmosdr> TrxDev_osmosdr_sptr;
 
-TrxDev_osmosdr_sptr make_trxdev_osmosdr(int sampleRate, int freqCorr);
+TrxDev_osmosdr_sptr make_trxdev_osmosdr(char *arg, int sampleRate, int freqCorr);
 
 class TrxDev_osmosdr : public TrxDev
 {
 
 public:
-    TrxDev_osmosdr(int sampleFreq, int freqCorr);
+    TrxDev_osmosdr(char *arg, int sampleFreq, int freqCorr);
     ~TrxDev_osmosdr();
 
 	void setSampleRate(int f);

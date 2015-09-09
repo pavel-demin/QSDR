@@ -17,7 +17,7 @@ SOURCES += rx/rx_psk31.cpp
 
 SOURCES += tx/tx.cpp tx/tx_usb.cpp tx/tx_lsb.cpp tx/tx_am.cpp tx/tx_fm.cpp tx/tx_null.cpp
 
-SOURCES += trxdev/trxDev.cpp  trxdev/trxDev_hiqsdr.cpp trxdev/trxDev_file.cpp
+SOURCES += trxdev/trxDev.cpp trxdev/trxDev_file.cpp
 SOURCES += trxdev/trxDev_null.cpp trxdev/trxDev_testsignal.cpp
 
 SOURCES += txsrc/txSrc.cpp txsrc/txSrc_mic.cpp txsrc/txSrc_miceq.cpp txsrc/txSrc_tone.cpp
@@ -47,9 +47,13 @@ SOURCES += trxdev/trxDev_usrp.cpp
 LIBS += -lgnuradio-uhd -luhd
 DEFINES += USRP
 
+SOURCES += trxdev/trxDev_hiqsdr.cpp
 INCLUDEPATH += gr-hiqsdr
 SOURCES += gr-hiqsdr/gr_hiqsdr_sink.cc
 SOURCES += gr-hiqsdr/gr_hiqsdr_source.cc
+
+SOURCES += trxdev/trxDev_redpitrcv.cpp
+SOURCES += redpitaya/rcv_source_impl.cc redpitaya/trx_source_impl.cc redpitaya/trx_sink_impl.cc
 
 INCLUDEPATH += rx rxsink tx trxdev txsrc gr gr_rds g7xx crypt /usr/include/libxml2
 

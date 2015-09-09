@@ -56,10 +56,12 @@ typedef enum {
 
 typedef enum {
     SRC_HIQSDR,
-	SRC_USRP,
+    SRC_USRP,
     SRC_OSMOSDR,
     SRC_NULL,
     SRC_TESTSIGNAL,
+    SRC_REDPITRCV,
+    SRC_REDPITTRX,
     SRC_FILE,
     SRC_END
 } RxSrc;
