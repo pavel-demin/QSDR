@@ -5,7 +5,7 @@
 #include "treemodel.h"
 #include "delegate.h"
 
-
+class QTreeView;
 
 class settings : public QObject
 {

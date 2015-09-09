@@ -24,8 +24,8 @@
 #define INCLUDED_GR_HIQSDR_SOURCE_H
 
 #include <hiqsdr_api.h>
-#include <gr_sync_block.h>
-#include <gruel/thread.h>
+#include <gnuradio/sync_block.h>
+#include <gnuradio/thread/thread.h>
 
 #define RX_CLOCK	122880000LL
 #define RX_EXT			0x80
@@ -54,7 +54,7 @@ HIQSDR_API gr_hiqsdr_source_sptr gr_make_hiqsdr_source(size_t itemsize, const ch
 		std::vector<gr_complex> rxFirTaps=std::vector<gr_complex>() , std::vector<gr_complex> txFirTaps=std::vector<gr_complex>() );
 
 
-class HIQSDR_API gr_hiqsdr_source : public gr_sync_block {
+class HIQSDR_API gr_hiqsdr_source : public gr::sync_block {
 	friend gr_hiqsdr_source_sptr gr_make_hiqsdr_source(size_t itemsize,
 			const char *host, 
 			unsigned short port,
@@ -72,7 +72,7 @@ class HIQSDR_API gr_hiqsdr_source : public gr_sync_block {
 	int           d_payload_size;  // maximum transmission unit (packet length)
 	bool          d_eof;           // zero-length packet is EOF
 	int           d_socket;        // handle to socket
-	gruel::mutex  d_mutex;           // protects d_socket and d_connected
+	gr::thread::mutex  d_mutex;           // protects d_socket and d_connected
 	unsigned char *d_temp_buff;    // hold buffer between  between call
 	int			byteMode;
 	unsigned char seqNr;

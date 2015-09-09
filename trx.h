@@ -21,7 +21,6 @@
 
 #include "rxSink.h"
 
-#include "usbsr.h"
 #include "trx.pb.h"
 
 class Trx : public QObject  {
@@ -185,7 +184,6 @@ class Trx : public QObject  {
 		int rawSrc;
 		bool isRunning;
 
-		UsbSR *usbSR;
 		RxSrc rxSource,oldSource;
 		TrxProto::GuiMessage *guiMsg;
 };

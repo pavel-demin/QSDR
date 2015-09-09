@@ -1,3 +1,6 @@
+#include <QtWidgets/QScrollBar>
+#include <QtWidgets/QMessageBox>
+#include <QtWidgets/QFileDialog>
 #include <QHostInfo>
 #include "type.h"
 #include <alsa/asoundlib.h>
@@ -308,8 +311,8 @@ QSdrImpl::QSdrImpl(char *trx_addr, int trx_port, char *key, QWidget *parent) : Q
 	timer->start(20);		// 50ms
 
 	QAudioFormat format;
-	format.setFrequency(8000);
-	format.setChannels(1);
+	format.setSampleRate(8000);
+	format.setChannelCount(1);
 	format.setSampleSize(16);
 	format.setCodec("audio/pcm");
 	format.setByteOrder(QAudioFormat::LittleEndian);
@@ -831,7 +834,7 @@ void QSdrImpl::resizeEvent(QResizeEvent *event) {
 void QSdrImpl::recordChanged(bool t) {
 	record = t;
 	playFile = QString("%1_%2_%3.raw").arg(dt->toString("yy.MM.dd_hh:mm:ss")).arg(cur->centerFreq).arg(sampleRate);
-	trxMsg->set_recordfilename(playFile.toAscii().data());
+	trxMsg->set_recordfilename(playFile.toLatin1().data());
 	trxMsg->set_recordfile(t);
 	if (record) {
 		QMainWindow::statusBar()->showMessage(QString("recording: ") + playFile);
@@ -1554,7 +1557,7 @@ void QSdrImpl::setPlayFile(QString fileName) {
 		freqChanged(fr);
 		setSampleRate(sr);
 		ui->comboBoxSampleRate->setCurrentIndex(ui->comboBoxSampleRate->findText(QString("%1").arg(sr)));
-		trxMsg->set_playfilename(fileName.toAscii().data());
+		trxMsg->set_playfilename(fileName.toLatin1().data());
 		trxMsg->set_playfile(true);
 	} 
 }

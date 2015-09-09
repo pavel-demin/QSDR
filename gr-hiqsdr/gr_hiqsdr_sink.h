@@ -25,7 +25,7 @@
 
 #include <hiqsdr_api.h>
 #include <gnuradio/sync_block.h>
-#include <gruel/thread.h>
+#include <gnuradio/thread/thread.h>
 
 class gr_hiqsdr_sink;
 typedef boost::shared_ptr<gr_hiqsdr_sink> gr_hiqsdr_sink_sptr;
@@ -48,7 +48,7 @@ gr_make_hiqsdr_sink (size_t itemsize,
  * \param eof          Send zero-length packet on disconnect
  */
 
-class HIQSDR_API gr_hiqsdr_sink : public gr_sync_block
+class HIQSDR_API gr_hiqsdr_sink : public gr::sync_block
 {
   friend gr_hiqsdr_sink_sptr gr_make_hiqsdr_sink (size_t itemsize, 
 					    const char *host,
@@ -61,7 +61,7 @@ class HIQSDR_API gr_hiqsdr_sink : public gr_sync_block
   bool          d_eof;             // send zero-length packet on disconnect
   int           d_socket;          // handle to socket
   bool          d_connected;       // are we connected?
-  gruel::mutex  d_mutex;           // protects d_socket and d_connected
+  gr::thread::mutex  d_mutex;           // protects d_socket and d_connected
 
  protected:
   /*!

@@ -1,4 +1,4 @@
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 #include <QtCore/QCoreApplication>
 #include <getopt.h>
 #include "qsdrimpl.h"

@@ -1,7 +1,7 @@
 #ifndef PLAY_H
 #define PLAY_H
 
-#include <QDialog>
+#include <QtWidgets/QDialog>
 #include <QtGui>
 #include "trx.pb.h"
 

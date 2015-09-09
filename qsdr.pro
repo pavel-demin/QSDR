@@ -1,14 +1,17 @@
+TARGET = qsdr
 TEMPLATE = app
+QT += uitools gui widgets network multimedia
+OBJECTS_DIR = build
+MOC_DIR = build
+RCC_DIR = build
 
-#CONFIG += qt debug_and_release mobility hiqsdr osmosdr usrp
-CONFIG += qt debug_and_release mobility hiqsdr
-#CONFIG += qt debug_and_release mobility 
-GNURADIO = /usr/
+FORMS += qsdr.ui play.ui
+RESOURCES = qsdr.qrc
 
 SOURCES += main.cpp trx.cpp qsdrimpl.cpp fftGraph.cpp filterGraph.cpp  audioGraph.cpp
 SOURCES += smeter.cpp settings.cpp delegate.cpp treemodel.cpp treeitem.cpp play.cpp
 
-SOURCES += rx/rx.cpp rx/rx_usb.cpp rx/rx_lsb.cpp rx/rx_cw.cpp rx/rx_am.cpp rx/rx_fm.cpp rx/rx_null.cpp 
+SOURCES += rx/rx.cpp rx/rx_usb.cpp rx/rx_lsb.cpp rx/rx_cw.cpp rx/rx_am.cpp rx/rx_fm.cpp rx/rx_null.cpp
 SOURCES += rx/rx_wfm_rds.cpp rx/rx_raw.cpp
 SOURCES += rx/rx_psk31.cpp
 
@@ -22,6 +25,8 @@ SOURCES += txsrc/txSrc_null.cpp txsrc/txSrc_message.cpp
 
 SOURCES += rxsink/rxSink.cpp rxsink/rxSink_speaker.cpp rxsink/rxSink_message.cpp
 
+SOURCES += hiqsdr/sink_impl.cc hiqsdr/source_impl.cc
+
 SOURCES += gr/gr_sdr_sink.cc gr/gr_psk31_decoder.cc
 SOURCES += gr/gr_reader_i.cc gr/gr_limit_ff.cc
 SOURCES += gr_rds/gr_rds_bpsk_demod.cc gr_rds/gr_rds_data_decoder.cc gr_rds/gr_rds_data_encoder.cc gr_rds/gr_rds_freq_divider.cc gr_rds/gr_rds_rate_enforcer.cc
@@ -32,66 +37,28 @@ SOURCES += g7xx/g711.c  g7xx/g721.c  g7xx/g723_24.c  g7xx/g723_40.c  g7xx/g72x.c
 
 SOURCES += crypt/sha256.c crypt/crypt.cpp
 
-HEADERS += qsdrimpl.h fftGraph.h trx.h filterGraph.h audioGraph.h smeter.h settings.h delegate.h treemodel.h treeitem.h \ 
-    play.h trx.h
+HEADERS += qsdrimpl.h fftGraph.h filterGraph.h audioGraph.h smeter.h settings.h delegate.h treemodel.h treeitem.h play.h trx.h
 
-FORMS += qsdr.ui \
-    play.ui
-RESOURCES   = qsdr.qrc
+SOURCES += trxdev/trxDev_osmosdr.cpp
+LIBS += -lgnuradio-osmosdr
+DEFINES += OSMOSDR
 
-QT += network
-MOBILITY = multimedia
+SOURCES += trxdev/trxDev_usrp.cpp
+LIBS += -lgnuradio-uhd -luhd
+DEFINES += USRP
 
-debug { 
-    TARGET = qsdr.debug
-    OBJECTS_DIR = .obj_debug
-}
-release { 
-    TARGET = qsdr
-    OBJECTS_DIR = .obj_release
-}
+INCLUDEPATH += gr-hiqsdr
+SOURCES += gr-hiqsdr/gr_hiqsdr_sink.cc
+SOURCES += gr-hiqsdr/gr_hiqsdr_source.cc
 
-osmosdr {
-	SOURCES += trxdev/trxDev_osmosdr.cpp 
-	LIBS += -lgnuradio-osmosdr
-	DEFINES += OSMOSDR
-}
-
-usrp {
-	SOURCES += trxdev/trxDev_usrp.cpp 
-	LIBS += -lgnuradio-uhd -luhd
-	DEFINES += USRP
-}
-
-hiqsdr {
-	LIBS += -lgnuradio-hiqsdr
-	GNURADIO_HIQSDR = /usr/local
-	INCLUDEPATH += $$GNURADIO_HIQSDR/include/hiqsdr/ 
-} else {
-	INCLUDEPATH += gr-hiqsdr
-	SOURCES += gr-hiqsdr/gr_hiqsdr_sink.cc
-	SOURCES += gr-hiqsdr/gr_hiqsdr_source.cc
-}
-
-UI_DIR = .ui
-MOC_DIR = .moc
-
-# INCLUDEPATH += $$GNURADIO/include/gnuradio/
 INCLUDEPATH += rx rxsink tx trxdev txsrc gr gr_rds g7xx crypt /usr/include/libxml2
 
-QMAKE_CXXFLAGS += -Wall -Wno-unused-parameter
-QMAKE_CFLAGS += -Wall -Wno-unused-parameter
-# LIBS += -L $$GNURADIO/lib/
-
-#LIBS += -lusb
 LIBS += -lprotobuf
 
 LIBS += -lfftw3
 LIBS += -lxml2
 LIBS += -lboost_system
 LIBS += -lasound
-
-LIBS += -lQtMultimedia
 
 LIBS += -lgnuradio-runtime
 LIBS += -lgnuradio-audio

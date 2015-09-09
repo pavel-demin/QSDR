@@ -1,4 +1,4 @@
-#include <QGraphicsItem>
+#include <QtWidgets/QGraphicsItem>
 #include <QTimer>
 #include <QWheelEvent>
 #include "config.h"

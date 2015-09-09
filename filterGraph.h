@@ -1,5 +1,5 @@
-#include <QGraphicsItem>
-#include <QWidget>
+#include <QtWidgets/QGraphicsItem>
+#include <QtWidgets/QWidget>
 #include "config.h"
 #include "settings.h"
 

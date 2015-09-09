@@ -1,10 +1,10 @@
 #include "audioGraph.h"
 
-#include <QGraphicsScene>
+#include <QtWidgets/QGraphicsScene>
 #include <QPainter>
-#include <QStyleOption>
+#include <QtWidgets/QStyleOption>
 #include <QDebug>
-#include <QGraphicsSceneMouseEvent>
+#include <QtWidgets/QGraphicsSceneMouseEvent>
 #include <math.h>
 #include <stdlib.h>
 #include "lib.h"

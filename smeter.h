@@ -1,4 +1,4 @@
-#include <QGraphicsItem>
+#include <QtWidgets/QGraphicsItem>
 
 
 class SMeter: public QGraphicsItem  {

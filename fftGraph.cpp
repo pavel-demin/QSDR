@@ -1,10 +1,11 @@
 #include "fftGraph.h"
 
-#include <QGraphicsScene>
+#include <QtWidgets/QGraphicsScene>
 #include <QPainter>
-#include <QStyleOption>
+#include <QtWidgets/QStyleOption>
 #include <QDebug>
-#include <QGraphicsSceneMouseEvent>
+#include <QtWidgets/QGraphicsSceneMouseEvent>
+#include <QtWidgets/QTreeView>
 #include <math.h>
 #include <stdlib.h>
 #include "lib.h"

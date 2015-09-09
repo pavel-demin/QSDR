@@ -1,4 +1,7 @@
 #include <QtGui>
+#include <QtWidgets/QColorDialog>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QLineEdit>
 #include "delegate.h"
 
 ItemDelegate::ItemDelegate(QObject *parent) : QStyledItemDelegate(parent)

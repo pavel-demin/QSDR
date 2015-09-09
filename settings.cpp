@@ -1,3 +1,4 @@
+#include <QtWidgets/QTreeView>
 #include <QtMultimedia/QAudioOutput>
 #include <QtMultimedia/QAudioInput>
 #include "settings.h"

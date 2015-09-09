@@ -1,12 +1,12 @@
 #ifndef DELEGATE_H
 #define DELEGATE_H
 
-#include <QStyledItemDelegate>
+#include <QtWidgets/QStyledItemDelegate>
 #include <QModelIndex>
 #include <QObject>
 #include <QSize>
-#include <QSpinBox>
-#include <QComboBox>
+#include <QtWidgets/QSpinBox>
+#include <QtWidgets/QComboBox>
 
 class ItemDelegate : public QStyledItemDelegate
 {

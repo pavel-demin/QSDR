@@ -24,7 +24,7 @@
 #include "config.h"
 #endif
 #include <gr_hiqsdr_source.h>
-#include <gr_io_signature.h>
+#include <gnuradio/io_signature.h>
 #include <stdexcept>
 #include <errno.h>
 #include <stdio.h>
@@ -125,8 +125,8 @@ gr_hiqsdr_source::gr_hiqsdr_source(size_t itemsize, const char *host,
 		bool eof, bool wait, int rxfreq, int txfreq, int rate,
 		bool ant, int presel, int att, int txLevel, bool ptt, int txRate, int clockDiff, 
 		std::vector<gr_complex> rxFirTaps, std::vector<gr_complex> txFirTaps):
-	gr_sync_block ("udp_source", gr_make_io_signature(0, 0, 0),
-			gr_make_io_signature(1, 1, itemsize)),
+	gr::sync_block ("udp_source", gr::io_signature::make(0, 0, 0),
+			gr::io_signature::make(1, 1, itemsize)),
 	d_itemsize(itemsize), d_payload_size(payload_size),
 	d_eof(eof), d_socket(-1)
 {
@@ -333,7 +333,7 @@ int gr_hiqsdr_source::get_port(void)
 
 
 void gr_hiqsdr_source::closeSocket(int socket) {
-	gruel::scoped_lock guard(d_mutex);  // protect d_socket from work()
+	gr::thread::scoped_lock guard(d_mutex);  // protect d_socket from work()
 
 	// Sending EOF can produce ERRCONNREFUSED errors that won't show up
 	//  until the next send or recv, which might confuse us if it happens

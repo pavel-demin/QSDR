@@ -24,7 +24,7 @@
 #include "config.h"
 #endif
 #include <gr_hiqsdr_sink.h>
-#include <gr_io_signature.h>
+#include <gnuradio/io_signature.h>
 #include <stdexcept>
 #include <errno.h>
 #include <stdio.h>
@@ -53,7 +53,7 @@ typedef void* optval_t;
 typedef char* optval_t;
 #endif
 
-#include <gruel/thread.h>
+#include <gnuradio/thread/thread.h>
 
 #define SNK_VERBOSE 0
 
@@ -99,9 +99,9 @@ static void report_error( const char *msg1, const char *msg2 )
 gr_hiqsdr_sink::gr_hiqsdr_sink (size_t itemsize, 
 			  const char *host, unsigned short port,
 			  int payload_size, bool eof)
-  : gr_sync_block ("udp_sink",
-		   gr_make_io_signature (1, 1, itemsize),
-		   gr_make_io_signature (0, 0, 0)),
+  : gr::sync_block ("udp_sink",
+		   gr::io_signature::make (1, 1, itemsize),
+		   gr::io_signature::make (0, 0, 0)),
     d_itemsize (itemsize), d_payload_size(payload_size), d_eof(eof),
     d_socket(-1), d_connected(false)
 {
@@ -181,7 +181,7 @@ gr_hiqsdr_sink::work (int noutput_items,
 	udpBuf[pos++]=0;
     }
 
-    gruel::scoped_lock guard(d_mutex);  // protect d_socket
+    gr::thread::scoped_lock guard(d_mutex);  // protect d_socket
 
     if(d_connected) {
 	for (i=0;i<itemsToSend;i++) {
@@ -246,7 +246,7 @@ void gr_hiqsdr_sink::disconnect()
   printf("gr_hiqsdr_sink disconnecting\n");
   #endif
 
-  gruel::scoped_lock guard(d_mutex);  // protect d_socket from work()
+  gr::thread::scoped_lock guard(d_mutex);  // protect d_socket from work()
 
   // Send a few zero-length packets to signal receiver we are done
   if(d_eof) {

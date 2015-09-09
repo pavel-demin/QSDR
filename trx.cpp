@@ -525,7 +525,7 @@ void Trx::setRecord(bool t) {
 	tb->lock();
 	record = t;
 	if (record) {
-		fileSink = gr::blocks::file_sink::make (sizeof(gr_complex), recordFileName.toAscii().data());
+		fileSink = gr::blocks::file_sink::make (sizeof(gr_complex), recordFileName.toLatin1().data());
 		tb->connect(trxDev, 0, fileSink, 0);
 	} else {
 		tb->disconnect(trxDev, 0, fileSink, 0);
@@ -552,7 +552,7 @@ void Trx::setTRXDev(RxSrc src) {
 			trxDev->setFreqCorr(hiqsdrFreqCorr);
 			break;
 		case SRC_FILE: 
-			trxDev = make_trxdev_file(sampleRate, playFileName.toAscii().data());
+			trxDev = make_trxdev_file(sampleRate, playFileName.toLatin1().data());
 			guiMsg->set_playfilelen(QFileInfo(playFileName).size()/sampleRate/sizeof(gr_complex));
 			break;
 #ifdef OSMOSDR
@@ -798,7 +798,7 @@ void Trx::settingsChanged(QString settings) {
 
 		if (st == "Device,HiQSDR,IP") {
 			if (QString(hiqip) != val) {
-				strcpy(hiqip,val.toAscii().data());
+				strcpy(hiqip,val.toLatin1().data());
 				setTRXDev(SRC_NULL);
 				setTRXDev(rxSource);
 			}
@@ -814,7 +814,7 @@ void Trx::settingsChanged(QString settings) {
 			int idx = val.toInt()+1;
 			if (idx >= audioDevList.size())
 				idx=0;
-			strcpy(audioDevSpeakerMic, audioDevList[idx].replace("_",",").toAscii().data());
+			strcpy(audioDevSpeakerMic, audioDevList[idx].replace("_",",").toLatin1().data());
 		}
 
 		if (st == "Device,Device") setTRXDev((RxSrc)val.toInt());
