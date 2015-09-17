@@ -248,6 +248,7 @@ Trx::~Trx() {
 
 	fftw_destroy_plan(plan);
 	fftw_free(in); fftw_free(out);
+	tb->unlock();
 }
 
 void Trx::selectVFO(int v) {

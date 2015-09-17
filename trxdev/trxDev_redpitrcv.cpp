@@ -60,10 +60,12 @@ TrxDev_redpittrx::TrxDev_redpittrx(int sRate, char *ip, int rxport, int txport) 
 
 	printf("NEW trxDev_redpittrx %d %s %d %d\n",sampleRate,ip,rxport,txport);
 	redpittrxSource = gr::redpittrx::source::make (sizeof(gr_complex), ip, rxport, sampleRate);
-	redpittrxSink = gr::redpittrx::sink::make (sizeof(gr_complex), ip, txport);
+	redpittrxSink = gr::redpittrx::sink::make (sizeof(gr_complex), ip, txport, 50000);
+	multi = gr::blocks::multiply_const_cc::make(5.0);
 
 	connect (redpittrxSource, 0, self(), 0);
-	connect (self(), 0, redpittrxSink, 0);
+	connect (self(), 0, multi, 0);
+	connect (multi, 0, redpittrxSink, 0);
 }
 
 TrxDev_redpittrx::~TrxDev_redpittrx()
@@ -72,18 +74,18 @@ TrxDev_redpittrx::~TrxDev_redpittrx()
 
 void TrxDev_redpittrx::setSampleRate(int f) {
 	sampleRate = f;
-	printf("trxDev_redpittrx samplerate %d %d\n",sampleRate, sampleRate / 50000);
-	redpittrxSource->setSampleRate(sampleRate);
+	printf("trxDev_redpittrx samplerate %d\n",sampleRate);
+	redpittrxSource->setRXRate(sampleRate);
 }
 
 void TrxDev_redpittrx::setCenterFreq(qint64 f) {
 	printf("trxDev_redpittrx freq %d\n",(int)f);
 	redpittrxSource->setRXFreq((int) f);
-	redpittrxSource->setTXFreq((int) f);
+	redpittrxSink->setTXFreq((int) f);
 }
 
 void TrxDev_redpittrx::setPTT(int on) {
-	redpittrxSource->setPtt((bool) on);
+	redpittrxSink->setPtt((bool) on);
 }
 
 void TrxDev_redpittrx::setPreamp(int n) { }

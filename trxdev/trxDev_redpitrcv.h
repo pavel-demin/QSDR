@@ -84,6 +84,7 @@ public:
 private:
 	gr::redpittrx::sink::sptr redpittrxSink;
 	gr::redpittrx::source::sptr redpittrxSource;
+	gr::blocks::multiply_const_cc::sptr multi;
 	int sampleRate, centerFreq;
 
 };

@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2013 <+YOU OR YOUR COMPANY+>.
+ * Copyright 2015 Renzo Davoli (modified for Red Pitaya)
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,13 +40,17 @@ namespace gr {
 
       /*!
        * \brief Return a shared_ptr to a new instance of redpittrx::sink.
-       *
        * To avoid accidental use of raw pointers, redpittrx::sink's
        * constructor is in a private implementation
        * class. redpittrx::sink::make is the public interface for
        * creating new instances.
        */
-      static sptr make(size_t itemsize, const char *host, unsigned short port, int payload_size=1472);
+      static sptr make(size_t itemsize, const char *host, unsigned short port, int rate);
+
+			virtual void setPtt(bool on)=0;
+			virtual void setTXFreq(int f)=0;
+			virtual void setTXRate(int rate)=0;
+
     };
 
   } // namespace redpittrx

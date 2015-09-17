@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2013 <+YOU OR YOUR COMPANY+>.
+ * Copyright 2015 Renzo Davoli (modified for Red Pitaya)
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,21 +46,9 @@ namespace gr {
 					  gr_vector_const_void_star &input_items,
 					  gr_vector_void_star &output_items);
 
-			  //int payload_size() { return d_payload_size; }
 			  int get_port();
 			  void setRXFreq(int f);
-			  //void setTXFreq(int f);
 			  void setSampleRate(int rate);
-			  //void setAnt(bool);
-			  //void setPresel(int);
-			  //void setAttenuator(int);
-			  //void setTXLevel(int l);
-			  //void setPtt(bool on);
-			  //void setTXRate(int);
-			  //void setCWMode(bool);
-			  //void setFilter(std::vector<gr_complex> coef, int dest=0);
-			  //void setClockCorr(int diff);
-
 	  };
 
   } // namespace redpitrcv

@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2013 <+YOU OR YOUR COMPANY+>.
+ * Copyright 2015 Renzo Davoli (modified for Red Pitaya)
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,34 +22,34 @@
 #define INCLUDED_REDPITTRX_SINK_IMPL_H
 
 #include <redpitaya/trx_sink.h>
+#include <netdb.h>
 
 namespace gr {
-  namespace redpittrx {
+	namespace redpittrx {
+		class sink_impl : public sink
+		{
+			private:
+				size_t	d_itemsize;
+				int           d_datasock;          // handle to data socket
+				int           d_ctlsock;          // handle to ctl socket
+				int connect (struct addrinfo *ip_dst, int rate);
+				void disconnect();
 
-    class sink_impl : public sink
-    {
-     private:
-		 size_t	d_itemsize;
+			public:
+				sink_impl(size_t itemsize, const char *host, unsigned short port, int rate);
+				~sink_impl();
 
-		 int           d_payload_size;    // maximum transmission unit (packet length)
-		 int           d_socket;          // handle to socket
-		 bool          d_connected;       // are we connected?
-		 //gruel::mutex  d_mutex;           // protects d_socket and d_connected
+				void setPtt(bool on);
+				void setTXFreq(int f);
+				void setTXRate(int rate);
 
-     public:
-      sink_impl(size_t itemsize, const char *host, unsigned short port, int payload_size);
-      ~sink_impl();
+				// Where all the action really happens
+				int work(int noutput_items,
+						gr_vector_const_void_star &input_items,
+						gr_vector_void_star &output_items);
+		};
 
-      // Where all the action really happens
-      int work(int noutput_items,
-	       gr_vector_const_void_star &input_items,
-	       gr_vector_void_star &output_items);
-	  int payload_size() { return d_payload_size; }
-	  void connect( const char *host, unsigned short port );
-	  void disconnect();
-    };
-
-  } // namespace redpittrx
+	} // namespace redpittrx
 } // namespace gr
 
 #endif /* INCLUDED_HIQSDR_SINK_IMPL_H */

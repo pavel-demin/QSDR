@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2013 <+YOU OR YOUR COMPANY+>.
+ * Copyright 2015 Renzo Davoli (modified for Red Pitaya)
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,20 +47,8 @@ namespace gr {
 		 * creating new instances.
 		 */
 		static sptr make(size_t itemsize, const char *host,unsigned short port, int rate=100000);
-		//virtual int payload_size()=0;
-		//virtual int get_port()=0;
 		virtual void setRXFreq(int f)=0;
-		virtual void setTXFreq(int f)=0;
-		virtual void setSampleRate(int rate)=0;
-		//virtual void setAnt(bool)=0;
-		//virtual void setPresel(int)=0;
-		//virtual void setAttenuator(int)=0;
-		//virtual void setTXLevel(int l)=0;
-		virtual void setPtt(bool on)=0;
-		//virtual void setTXRate(int)=0;
-		//virtual void setCWMode(bool)=0;
-		//virtual void setFilter(std::vector<gr_complex> coef, int dest=0)=0;
-		//virtual void setClockCorr(int diff)=0;
+		virtual void setRXRate(int rate)=0;
 	};
 
     } // namespace redpittrx
