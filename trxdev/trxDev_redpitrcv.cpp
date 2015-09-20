@@ -51,14 +51,14 @@ void TrxDev_redpitrcv::setPosition(int pos) {}
 int TrxDev_redpitrcv::getPosition() { return 0;}
 
 TrxDev_redpittrx_sptr make_trxdev_redpittrx(int sampleRate, char *ip, int port) {
-	printf("NEW make_redpittrx %d %s %d %d\n",sampleRate,ip,port);
+	printf("NEW make_redpittrx %d %s %d\n",sampleRate,ip,port);
 	return gnuradio::get_initial_sptr(new TrxDev_redpittrx(sampleRate, ip, port));
 }
 
 TrxDev_redpittrx::TrxDev_redpittrx(int sRate, char *ip, int port) : TrxDev("REDPITTRX") {
 	sampleRate = sRate;
 
-	printf("NEW trxDev_redpittrx %d %s %d %d\n",sampleRate,ip,port);
+	printf("NEW trxDev_redpittrx %d %s %d\n",sampleRate,ip,port);
 	redpittrxSource = gr::redpittrx::source::make (sizeof(gr_complex), ip, port, sampleRate);
 	redpittrxSink = gr::redpittrx::sink::make (sizeof(gr_complex), ip, port, 50000);
 	multi = gr::blocks::multiply_const_cc::make(5.0);
