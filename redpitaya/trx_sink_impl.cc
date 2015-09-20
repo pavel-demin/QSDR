@@ -73,8 +73,8 @@ namespace gr {
 			}
 
 		int sink_impl::connect (struct addrinfo *ip_dst, int rate) {
-			uint32_t ctl=0;
-			uint32_t data=1;
+			uint32_t ctl=2;
+			uint32_t data=3;
 			d_ctlsock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 			if(d_ctlsock == -1) {
 				perror("redpittrx: socket open");

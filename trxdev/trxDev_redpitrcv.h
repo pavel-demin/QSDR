@@ -52,13 +52,13 @@ class TrxDev_redpittrx;
 
 typedef boost::shared_ptr<TrxDev_redpittrx> TrxDev_redpittrx_sptr;
 
-TrxDev_redpittrx_sptr make_trxdev_redpittrx(int sampleRate, char *ip, int rxport, int txport);
+TrxDev_redpittrx_sptr make_trxdev_redpittrx(int sampleRate, char *ip, int port);
 
 class TrxDev_redpittrx : public TrxDev
 {
 
 public:
-    TrxDev_redpittrx(int sampleFreq, char *ip, int rxport, int txport);
+    TrxDev_redpittrx(int sampleFreq, char *ip, int port);
     ~TrxDev_redpittrx();
 
 	void setSampleRate(int f);

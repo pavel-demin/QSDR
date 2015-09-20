@@ -145,8 +145,7 @@ class Trx : public QObject  {
 		int freqshift;
 		char hiqip[256];
 		char redip[256];
-		int redrxport;
-		int redtxport;
+		int redport;
 		char osmoarg[256];
 		char audioDevSpeakerMic[256];
 		double fftSize;

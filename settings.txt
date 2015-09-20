@@ -8,8 +8,7 @@ Device
   freqCorr	int,0,-10000,10000
  RedPitaya
   IP	string,192.168.1.100
-  rxport	int,1001,1,32768
-  txport	int,1002,1,32768
+  port	int,1001,1,32768
   freqCorr	int,0,-10000,10000
  AudioDev
   Gnuradio	enum,0,[AUDIODEV]

@@ -147,8 +147,7 @@ Trx::Trx(int port, char *key)  {
 	hiqsdrFreqCorr = 0;
 	osmoFreqCorr = 0;
 	redFreqCorr = 0;
-	redrxport = 1001;
-	redtxport = 1002;
+	redport = 1001;
 	dcFilter = true;
 	txMute = true;
 	smtrCal = 0;
@@ -577,10 +576,10 @@ void Trx::setTRXDev(RxSrc src) {
 			trxDev = make_trxdev_testsignal(sampleRate);
 			break;
 		case SRC_REDPITRCV:
-			trxDev = make_trxdev_redpitrcv(sampleRate, redip, redrxport);
+			trxDev = make_trxdev_redpitrcv(sampleRate, redip, redport);
 			break;
 		case SRC_REDPITTRX:
-			trxDev = make_trxdev_redpittrx(sampleRate, redip, redrxport, redtxport);
+			trxDev = make_trxdev_redpittrx(sampleRate, redip, redport);
 			break;
 		default:
 			trxDev = make_trxdev_null(sampleRate);
@@ -842,24 +841,14 @@ void Trx::settingsChanged(QString settings) {
 				setTRXDev(SRC_REDPITTRX);
 			}
 		}
-		if (st ==  "Device,RedPitaya,rxport") {
+		if (st ==  "Device,RedPitaya,port") {
 			int newport=val.toInt();
-			if (newport != redrxport) {
-				redrxport=newport;
+			if (newport != redport) {
+				redport=newport;
 				if (rxSource == SRC_REDPITRCV) {
 					setTRXDev(SRC_NULL);
 					setTRXDev(SRC_REDPITRCV);
 				}
-				if (rxSource == SRC_REDPITTRX) {
-					setTRXDev(SRC_NULL);
-					setTRXDev(SRC_REDPITTRX);
-				}
-			}
-		}
-		if (st ==  "Device,RedPitaya,txport") {
-			int newport=val.toInt();
-			if (newport != redtxport) {
-				redtxport=newport;
 				if (rxSource == SRC_REDPITTRX) {
 					setTRXDev(SRC_NULL);
 					setTRXDev(SRC_REDPITTRX);
